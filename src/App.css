@@ -28,11 +28,113 @@
   color: #61dafb;
 }
 
-@keyframes App-logo-spin {
+/* ----------------------Loader------------------------------------------------- */
+
+/* Spinner.css */
+.overlay {
+  width: 100%;
+  height: 100%;
+  background-color: rgba(245, 243, 242, 0.7); /* Semi-transparent background */
+  backdrop-filter: blur(4px); /* Adjust the blur amount as needed */
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 1000; /* Place the overlay above other content */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.spinner-container {
+  width: 8vmax; /* Set width and height of container to match spinner */
+  height: 8vmax;
+  position: relative; /* Use relative position for the spinner container */
+}
+
+.spinner {
+  width: 100%;
+  height: 100%;
+  border-right: 4px solid #0f0601;
+  border-radius: 100%;
+  animation: spinRight 800ms linear infinite;
+  position: absolute; /* Use absolute position for the spinner */
+}
+
+.spinner:before,
+.spinner:after {
+  content: "";
+  width: 6vmax;
+  height: 6vmax;
+  display: block;
+  position: absolute;
+  top: calc(50% - 3vmax);
+  left: calc(50% - 3vmax);
+  border-left: 3px solid #0f0601;
+  border-radius: 100%;
+  animation: spinLeft 800ms linear infinite;
+}
+@keyframes spinLeft {
   from {
     transform: rotate(0deg);
   }
   to {
+    transform: rotate(720deg);
+  }
+}
+
+@keyframes spinRight {
+  from {
     transform: rotate(360deg);
   }
+  to {
+    transform: rotate(0deg);
+  }
+}
+
+/*---------------------Login Form *****************************/
+.welcomeText {
+  color: darkgray;
+  font-style: italic;
+}
+.titleText {
+  font-size: 30px;
+}
+
+/*-----------------popup btn ---------------------*/
+.cancelbtn {
+  border-color: #ff0000 !important;
+  color: #ee1c25 !important;  
+  min-width: 120px;
+  border-radius: 4px !important;
+}
+
+.submitbtn {
+  border-color: #71368a !important;
+  color: #ffffff !important;
+  background-color: #71368a !important;  
+  min-width: 120px;
+  border-radius: 4px !important;
+}
+.submitBtn{
+  background-color: #6c3483;
+  border-color: #6c3483;
+  color: #ffffff !important;
+  border-radius: 4px !important;
+}
+
+.submitBtn:hover{
+  background-color: #6c3483;
+}
+
+/* --------------DataTable-------------------------- */
+.tableBorder .p-datatable-table {
+    border: 1px solid gray;
+    min-width: "40rem";
+}
+.tableIcon {
+  cursor: pointer;
+  margin-right: 8px;
+}
+.tablePointer {
+  cursor: pointer;
 }
