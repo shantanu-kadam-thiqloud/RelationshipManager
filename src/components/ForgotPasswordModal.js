@@ -10,10 +10,11 @@ const customStyles = {
     left: "50%",
     right: "auto",
     bottom: "auto",
-    width: "400px",
+    width: "433px",
     transform: "translate(-50%, -50%)",
     padding: "30px",
-    borderRadius: "10px",
+    borderRadius: "0",
+
   },
 };
 
@@ -26,13 +27,16 @@ const ForgotPasswordModal = ({ isOpen, onRequestClose }) => {
 
   return (
     <Modal isOpen={isOpen} onRequestClose={onRequestClose} style={customStyles}>
-      <div className="d-flex justify-content-between align-items-center mb-3">
-        <h5 className="mb-0">Forgot Password</h5>
-        <button onClick={onRequestClose} className="btn btn-sm btn-light text-danger fw-bold">
-          ✕
-        </button>
+      <div className="textright">
+        <i class="fa-solid fa-xmark" onClick={onRequestClose} ></i>
+
+
       </div>
-      <p className="text-muted mb-3">
+
+      <h5 className="titleText">Forgot Password</h5>
+
+
+      <p className="textmuted mb-3">
         Enter your email & we’ll send you a link to reset your password.
       </p>
 
@@ -46,14 +50,14 @@ const ForgotPasswordModal = ({ isOpen, onRequestClose }) => {
         }}
       >
         {({ values, handleChange, handleSubmit, errors, touched }) => (
-          <form onSubmit={handleSubmit}>
+          <form onSubmit={handleSubmit} className="login-box">
             <div className="mb-3">
-              <label className="form-label">Email Address</label>
+              <label className="form-label"> <i class="fa-solid fa-envelope mr10"></i> Email Address</label>
               <input
                 name="email"
                 type="email"
                 className={`form-control ${touched.email && errors.email ? "is-invalid" : ""}`}
-                placeholder="alexander.pierce@gmail.com"
+                placeholder="ex.alexander.pierce@gmail.com"
                 value={values.email}
                 onChange={handleChange}
               />
@@ -62,7 +66,7 @@ const ForgotPasswordModal = ({ isOpen, onRequestClose }) => {
               )}
             </div>
 
-            <button type="submit" className="btn btn-primary w-100">
+            <button type="submit" className="btn btn-primary loginbtn w-100">
               RESET PASSWORD
             </button>
             <button
@@ -70,8 +74,11 @@ const ForgotPasswordModal = ({ isOpen, onRequestClose }) => {
               className="btn btn-link mt-2 text-muted w-100"
               onClick={onRequestClose}
             >
-              ← Back to Login
+
             </button>
+            <div className="text-center">
+              <span onClick={onRequestClose} className="backbtn"><i class="fa-solid fa-arrow-left mr10"></i> Back to Login</span>
+            </div>
           </form>
         )}
       </Formik>
