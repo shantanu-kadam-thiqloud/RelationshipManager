@@ -1,6 +1,7 @@
 import React from "react";
 import Header from "../CommonComponents/Header";
 import Footer from "../CommonComponents/Footer";
+import { Link, useLocation } from "react-router-dom";
 
 const Campaigns = () => {
 
@@ -80,8 +81,10 @@ const Campaigns = () => {
                         <div className="description">{campaign.description}</div>
                         </div>
                         <div className="button common-card-btn">
-                        VIEW CAMPAIGN DETAILS <i className="fa-solid fa-arrow-right floatRight"></i>
-                        </div>
+                        <Link className="CPDetailsLink" to="/campaign-details">
+                          VIEW CAMPAIGN DETAILS <i className="fa-solid fa-arrow-right floatRight"></i>
+                        </Link>
+                       </div>
                     </div>
                     </div>
                 ))}
