@@ -29,13 +29,9 @@ const ForgotPasswordModal = ({ isOpen, onRequestClose }) => {
     <Modal isOpen={isOpen} onRequestClose={onRequestClose} style={customStyles}>
       <div className="textright">
         <i class="fa-solid fa-xmark" onClick={onRequestClose} ></i>
-
-
       </div>
 
       <h5 className="titleText">Forgot Password</h5>
-
-
       <p className="textmuted mb-3">
         Enter your email & we’ll send you a link to reset your password.
       </p>

@@ -74,6 +74,7 @@ const ContactList = () => {
   const [columns, setColumns] = useState([]);
   const [selectedItem, setSelectedItem] = useState(null);
   const [showModal, setShowModal] = useState(false);
+  const [globalFilterValue, setGlobalFilterValue] = useState('');
 
   const handleAddContact = (newContact) => {
     setContacts((prev) => [...prev, newContact]);
@@ -147,58 +148,79 @@ const ContactList = () => {
     <div className="container">
       <h2 className="mt-5">Contact List</h2>
       <div className="row">
-        <div className="col-md-9"></div>
-        <div className="col-md-3">
+        <div className="col-md-8"><span className="p-input-icon-left" style={{ marginBottom: '10px' }}>
+            <i className="pi pi-search" />
+            <input
+                type="text"
+                // value={globalFilterValue}
+                // onChange={(e) => setGlobalFilterValue(e.target.value)}
+                placeholder="Global Search"
+                className="p-inputtext p-component"
+            />
+            </span>
+            </div>
+        <div className="col-md-4 textright">
         <button
-            className="btn submitbtn me-2 mt-2 mb-4"
+            className="btn btn-primary btn-add me-2 mt-2 mb-4"
             type="button"
             onClick={() => setShowModal(true)}            
             >
             Add Contact
             </button>
             <button
-                className="btn submitbtn min mt-2 mb-4"
+                className="btn btn-primary btn-add min mt-2 mb-4"
                 type="button"
                 onClick={() => setShowModal(true)}
             >
-                Add Campaign
+                Add To Campaign
             </button>
         </div>
       </div>
-      <div className="row">        
-      <DataTable className="tableBorder" size='small' value={contacts}  selectionMode= 'checkbox' selection={selectedItem} onSelectionChange={(e) => setSelectedItem(e.value)} dataKey="id" 
-      paginator
-      rows={5}
-      paginatorTemplate={{
-        layout: 'PrevPageLink PageLinks NextPageLink',
-        PrevPageLink: (options) => (
-          <button
-            onClick={options.onClick}
-            disabled={options.disabled}
-            className="p-paginator-prev"
-          >
-            Previous
-          </button>
-        ),
-        NextPageLink: (options) => (
-          <button
-            onClick={options.onClick}
-            disabled={options.disabled}
-            className="p-paginator-next"
-          >
-            Next
-          </button>
-        )
-      }} >
-        <Column selectionMode="multiple" headerStyle={{ width: '3rem' }}></Column>
+      <div className="row mt-4">        
+      <DataTable
+            className="tableBorder"
+            size="small"
+            value={contacts}
+            selectionMode="checkbox"
+            selection={selectedItem}
+            onSelectionChange={(e) => setSelectedItem(e.value)}
+            dataKey="id"
+            paginator
+            rows={5}
+            filterDisplay="row"
+            globalFilter={globalFilterValue}
+            globalFilterFields={columns.map(col => col.field)} // use all field names
+            paginatorTemplate={{
+                layout: 'PrevPageLink PageLinks NextPageLink',
+                PrevPageLink: (options) => (
+                <button
+                    onClick={options.onClick}
+                    disabled={options.disabled}
+                    className="p-paginator-prev"
+                >
+                    Previous
+                </button>
+                ),
+                NextPageLink: (options) => (
+                <button
+                    onClick={options.onClick}
+                    disabled={options.disabled}
+                    className="p-paginator-next"
+                >
+                    Next
+                </button>
+                )
+            }}
+            >
+            <Column selectionMode="multiple" headerStyle={{ width: '3rem' }} />
             {columns.map((col, i) => (
-            <Column
-            key={i}
-            field={col.field}
-            header={col.header}
-            body={col.body}
-            sortable={col.sortable ?? false}
-          />
+                <Column
+                key={i}
+                field={col.field}
+                header={col.header}
+                body={col.body}
+                sortable={col.sortable ?? false}
+                />
             ))}
         </DataTable>
       </div>  

@@ -324,10 +324,10 @@ textarea::placeholder {
 /* Style for Prev and Next buttons */
 .p-paginator-prev,
 .p-paginator-next {
-  background-color: #71368a;
+  color: #71368a;
   /* Bootstrap primary blue */
-  color: #fff;
-  border: none;
+  background-color: #fff;
+  border: 1px solid #ddd;
   padding: 6px 14px;
   cursor: pointer;
   font-size: 14px;
@@ -799,10 +799,21 @@ textarea::placeholder {
   border: none;
 }
 
+tbody, td, tfoot, th, thead, tr{
+  white-space: nowrap;
+}
 
 
-
-
+/* Change checkbox border and checkmark color */
+.p-checkbox.p-highlight .p-checkbox-box {
+  background-color: #71368A !important; /* checkbox fill when checked */
+  border-color: #71368A !important;
+  color: #fff !important;
+}
+.p-datatable .p-datatable-tbody > tr.p-highlight{
+  color: #333 !important;
+  background-color: #f6f0f9 !important;
+}
 
 /* ...................................................media................................................ */
 
