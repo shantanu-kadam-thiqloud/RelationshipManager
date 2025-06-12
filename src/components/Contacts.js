@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import RestDataSource from "../services/API-request";
 import AddContactModal from "./AddContactModal";
+import EditContactModal from "./EditContactModal";
 import { DataTable } from "primereact/datatable";
 import { Column } from "primereact/column";
 import Header from "../CommonComponents/Header";
@@ -65,6 +66,7 @@ const Contacts = () => {
       const [selectedItem, setSelectedItem] = useState(null);
       const [showModal, setShowModal] = useState(false);
       const [globalFilterValue, setGlobalFilterValue] = useState('');
+      const [showEditModal, setShowEditModal] = useState(false);
     
       const handleAddContact = (newContact) => {
         setContacts((prev) => [...prev, newContact]);
@@ -116,7 +118,7 @@ const Contacts = () => {
                 header: "Action",
                 body: (rowData) => (
                   <div style={{ display: 'flex', gap: '10px', justifyContent: 'center' }}>
-                    <i className="fa fa-pencil" style={{ color: 'maroon', cursor: 'pointer' }}></i>
+                    <i className="fa fa-pencil" onClick={() => setShowEditModal(true)} style={{ color: 'maroon', cursor: 'pointer' }}></i>
                     <i className="fa fa-trash" style={{ color: 'red', cursor: 'pointer' }}></i>
                   </div>
                 ),
@@ -213,7 +215,14 @@ const Contacts = () => {
         onSubmit={(newContact) => {
             setContacts((prev) => [...prev, newContact]);
         }}
-        />      
+        />
+        <EditContactModal
+        isOpen={showEditModal}
+        onRequestClose={() => setShowEditModal(false)}
+        onSubmit={(newContact) => {
+            setContacts((prev) => [...prev, newContact]);
+        }}
+        />
             </div>
             <Footer />
         </>
