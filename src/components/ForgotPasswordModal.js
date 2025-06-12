@@ -13,7 +13,7 @@ const customStyles = {
     width: "433px",
     transform: "translate(-50%, -50%)",
     padding: "30px",
-    borderRadius: "0",
+    borderRadius: "4px",
 
   },
 };

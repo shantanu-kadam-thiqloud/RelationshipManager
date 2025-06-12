@@ -142,8 +142,8 @@ const EditGuest = () => {
                             <div className="row SelectArea">
 
                                 <div className="col-md-12">
-                                    <div class="mb-3">
-                                        <label for="exampleFormControlTextarea1" class="form-label">Example textarea</label>
+                                    <div class="mb-2 mt-2">
+
                                         <textarea class="form-control" id="exampleFormControlTextarea1" rows="3" placeholder="Enter any additional information about this guest..."></textarea>
                                     </div>
                                 </div>
@@ -153,6 +153,14 @@ const EditGuest = () => {
                             </div>
                         </form>
                     </div>
+                </div>
+                <div className="text-end mt-4">
+                    <button type="submit" className="btn btn-primary submitBtn common-btn2 mr10">
+                        save
+                    </button>
+                    <button type="submit" className="btn btn-primary submitBtn common-btn2">
+                        cancel
+                    </button>
                 </div>
             </div>
 
