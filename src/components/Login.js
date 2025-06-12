@@ -4,10 +4,12 @@ import Spinner from "../CommonComponents/Spinner";
 import loginImage from "../Assets/Images/LoginPage.png";
 import Logo from "../Assets/Images/Logo.png"
 import ForgotPasswordModal from "./ForgotPasswordModal";
+import ResetPasswordModel from "./ResetPasswordModel";
 
 const Login = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [showForgotModal, setShowForgotModal] = useState(false);
+  const [showResetPWModal, setShowResetPWModal] = useState(false);
 
   useEffect(() => {
     setIsLoading(true);
@@ -73,6 +75,13 @@ const Login = () => {
                 >
                   Forgot Password?
                 </button>
+                <button
+                  type="button"
+                  className="btn btn-link custom-btn"
+                  onClick={() => setShowResetPWModal(true)}
+                >
+                  Reset Password?
+                </button>
               </div>
             </div>
 
@@ -90,6 +99,10 @@ const Login = () => {
       <ForgotPasswordModal
         isOpen={showForgotModal}
         onRequestClose={() => setShowForgotModal(false)}
+      />
+      <ResetPasswordModel
+        isOpen={showResetPWModal}
+        onRequestClose={() => setShowResetPWModal(false)}
       />
     </div>
   );
