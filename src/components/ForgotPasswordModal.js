@@ -28,7 +28,7 @@ const ForgotPasswordModal = ({ isOpen, onRequestClose }) => {
   return (
     <Modal isOpen={isOpen} onRequestClose={onRequestClose} style={customStyles}>
       <div className="textright">
-        <i class="fa-solid fa-xmark" onClick={onRequestClose} ></i>
+        <i className="fa-solid fa-xmark" onClick={onRequestClose} ></i>
       </div>
 
       <h5 className="titleText">Forgot Password</h5>
@@ -48,7 +48,7 @@ const ForgotPasswordModal = ({ isOpen, onRequestClose }) => {
         {({ values, handleChange, handleSubmit, errors, touched }) => (
           <form onSubmit={handleSubmit} className="login-box">
             <div className="mb-3">
-              <label className="form-label"> <i class="fa-solid fa-envelope mr10"></i> Email Address</label>
+              <label className="form-label"> <i className="fa-solid fa-envelope mr10"></i> Email Address</label>
               <input
                 name="email"
                 type="email"
@@ -73,7 +73,7 @@ const ForgotPasswordModal = ({ isOpen, onRequestClose }) => {
 
             </button>
             <div className="text-center">
-              <span onClick={onRequestClose} className="backbtn"><i class="fa-solid fa-arrow-left mr10"></i> Back to Login</span>
+              <span onClick={onRequestClose} className="backbtn"><i className="fa-solid fa-arrow-left mr10"></i> Back to Login</span>
             </div>
           </form>
         )}

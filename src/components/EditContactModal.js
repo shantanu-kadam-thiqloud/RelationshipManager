@@ -4,17 +4,17 @@ import { Formik, Form, Field, ErrorMessage } from "formik";
 import * as Yup from "yup";
 
 const customStyles = {
-    content: {
-      top: "50%",
-      left: "50%",
-      right: "auto",
-      bottom: "auto",
-      width: "400px",
-      transform: "translate(-50%, -50%)",
-      padding: "30px",
-      borderRadius: "10px",
-    },
-  };
+  content: {
+    top: "50%",
+    left: "50%",
+    right: "auto",
+    bottom: "auto",
+    width: "433px",
+    transform: "translate(-50%, -50%)",
+    padding: "30px",
+    borderRadius: "4px",
+  },
+};
 
 Modal.setAppElement("#root");
 
@@ -30,19 +30,17 @@ const EditContactModal = ({ isOpen, onRequestClose }) => {
   });
 
   return (
+
     <Modal
       isOpen={isOpen}
       onRequestClose={onRequestClose}
-      contentLabel="Add Contact"      
+      contentLabel="Add Contact"
       style={customStyles}
     >
-      <div className="modal-header">
-        <h2>Edit Contact</h2>
-        <button className="close-btn" onClick={onRequestClose}>
-          ×
-        </button>
+      <div className="textright">
+        <i className="fa-solid fa-xmark" onClick={onRequestClose} ></i>
       </div>
-
+      <h5 className="titleText">Edit Contact</h5>
       <Formik
         initialValues={{
           fullName: "",
@@ -59,22 +57,21 @@ const EditContactModal = ({ isOpen, onRequestClose }) => {
         }}
       >
         {() => (
-          <Form className="modal-form">
+          <Form className="modal-form add-new-contact">
             <label>Full Name</label>
-            <Field name="fullName" className="form-input" />
+            <Field name="fullName" className="form-control" placeholder="ex.Alexander Pierce" />
             <ErrorMessage name="fullName" component="div" className="form-error" />
 
             <label>Email Address</label>
-            <Field name="email" type="email" className="form-input" />
+            <Field name="email" type="email" className="form-control" placeholder="ex.alexander.pierce@gmail.com" />
             <ErrorMessage name="email" component="div" className="form-error" />
 
             <label>Phone Number</label>
-            <Field name="phone" className="form-input" placeholder="+91 9096357565" />
+            <Field name="phone" className="form-control" placeholder="ex.+91 9096357565" />
             <ErrorMessage name="phone" component="div" className="form-error" />
-
-            <div className="form-row">
-              <div>
-                <label>City</label>
+            <div className="row">
+              <div className="col-md-6">
+                <label className="form-label">City</label>
                 <Field as="select" name="city" className="form-select">
                   <option value="">Select</option>
                   <option value="Pune">Pune</option>
@@ -84,9 +81,8 @@ const EditContactModal = ({ isOpen, onRequestClose }) => {
                 </Field>
                 <ErrorMessage name="city" component="div" className="form-error" />
               </div>
-
-              <div>
-                <label>Status</label>
+              <div className="col-md-6">
+                <label className="form-label">Status</label>
                 <Field as="select" name="status" className="form-select">
                   <option value="">Select</option>
                   <option value="Active">Active</option>
@@ -95,13 +91,12 @@ const EditContactModal = ({ isOpen, onRequestClose }) => {
                 <ErrorMessage name="status" component="div" className="form-error" />
               </div>
             </div>
-
-            <div className="modal-actions">
-              <button type="submit" className="btn-add">
+            <div className="text-end mt-4">
+              <button type="submit" className="btn btn-primary submitBtn common-btn2 mr10">
                 Update
               </button>
-              <button type="button" className="btn-cancel" onClick={onRequestClose}>
-                CANCEL
+              <button type="submit" className="btn btn-primary submitBtn common-btn2" onClick={onRequestClose}>
+                Cancel
               </button>
             </div>
           </Form>

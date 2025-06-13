@@ -2,20 +2,38 @@ import React, { useEffect, useState } from "react";
 import { toast } from "react-toastify";
 import Spinner from "../CommonComponents/Spinner";
 import loginImage from "../Assets/Images/LoginPage.png";
-import Logo from "../Assets/Images/Logo.png"
+import Logo from "../Assets/Images/Logo.png";
 import ForgotPasswordModal from "./ForgotPasswordModal";
-import ResetPasswordModel from "./ResetPasswordModel";
+import { Formik, Form, Field, ErrorMessage } from "formik";
+import * as Yup from "yup";
+import { useNavigate } from "react-router-dom";
 
 const Login = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [showForgotModal, setShowForgotModal] = useState(false);
-  const [showResetPWModal, setShowResetPWModal] = useState(false);
+  const navigate = useNavigate(); 
 
   useEffect(() => {
     setIsLoading(true);
-
     setIsLoading(false);
   }, []);
+
+  const initialValues = {
+    email: "",
+    password: "",
+  };
+
+  const validationSchema = Yup.object().shape({
+    email: Yup.string().email("Invalid email format").required("Email is required"),
+    password: Yup.string().required("Password is required"),
+  });
+
+  const handleSubmit = (values) => {
+    console.log("Login submitted:", values);
+    toast.success("Logged in successfully");
+    navigate("/dashboard");
+  };
+
   return (
     <div className="container-fluid vh-100 align-items-center ">
       <Spinner isLoading={isLoading} />
@@ -44,65 +62,72 @@ const Login = () => {
             <div className="mt-3 welcomeText">Welcome to,</div>
             <div className="titleText mb-4">Login RM Portal</div>
           </div>
-          <form className="login-box">
-            <div className="mb-3">
-              <label htmlFor="email" className="form-label">
-                <i class="fa-solid fa-envelope mr10"></i>Email Address
-              </label>
-              <input
-                type="email"
-                className="form-control"
-                id="email"
-                placeholder="ex.alexander.pierce@gmail.com"
-              />
-            </div>
 
-            <div className="mb-3">
-              <label htmlFor="password" className="form-label">
-                <i class="fa-solid fa-lock mr10"></i>Password
-              </label>
-              <input
-                type="password"
-                className="form-control"
-                id="password"
-                placeholder="••••••••"
-              />
-              <div className="text-end mt-2">
-                <button
-                  type="button"
-                  className="btn btn-link custom-btn"
-                  onClick={() => setShowForgotModal(true)}
-                >
-                  Forgot Password?
-                </button>
-                <button
-                  type="button"
-                  className="btn btn-link custom-btn"
-                  onClick={() => setShowResetPWModal(true)}
-                >
-                  Reset Password?
-                </button>
-              </div>
-            </div>
+          <Formik
+            initialValues={initialValues}
+            validationSchema={validationSchema}
+            onSubmit={(values, { resetForm }) => {
+              handleSubmit(values);
+              resetForm();
+            }}
+          >
+            {({ errors, touched }) => (
+              <Form className="login-box">
+                <div className="mb-3">
+                  <label htmlFor="email" className="form-label">
+                    <i className="fa-solid fa-envelope mr10"></i>Email Address
+                  </label>
+                  <Field
+                    type="email"
+                    className={`form-control ${touched.email && errors.email ? 'is-invalid' : ''}`}
+                    id="email"
+                    name="email"
+                    placeholder="ex.alexander.pierce@gmail.com"
+                  />
+                  <ErrorMessage name="email" component="div" className="invalid-feedback" />
+                </div>
 
-            <button type="submit" className="btn btn-primary w-100 submitBtn loginbtn mt-3">
-              LOGIN
-            </button>
-          </form>
+                <div className="mb-3">
+                  <label htmlFor="password" className="form-label">
+                    <i className="fa-solid fa-lock mr10"></i>Password
+                  </label>
+                  <Field
+                    type="password"
+                    className={`form-control ${touched.password && errors.password ? 'is-invalid' : ''}`}
+                    id="password"
+                    name="password"
+                    placeholder="••••••••"
+                  />
+                  <ErrorMessage name="password" component="div" className="invalid-feedback" />
+
+                  <div className="text-end mt-2">
+                    <button
+                      type="button"
+                      className="btn btn-link custom-btn"
+                      onClick={() => setShowForgotModal(true)}
+                    >
+                      Forgot Password?
+                    </button>
+                  </div>
+                </div>
+
+                <button type="submit" className="btn btn-primary w-100 submitBtn loginbtn mt-3">
+                  LOGIN
+                </button>
+              </Form>
+            )}
+          </Formik>
 
           <footer className="text-center mt-4 copyRight">
             Copyright © 2025 RM Portal. All rights reserved.
           </footer>
         </div>
       </div>
+
       {/* Forgot Password Modal */}
       <ForgotPasswordModal
         isOpen={showForgotModal}
         onRequestClose={() => setShowForgotModal(false)}
-      />
-      <ResetPasswordModel
-        isOpen={showResetPWModal}
-        onRequestClose={() => setShowResetPWModal(false)}
       />
     </div>
   );
