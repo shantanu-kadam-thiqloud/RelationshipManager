@@ -37,16 +37,16 @@ const [isLoading, setIsLoading] = useState(false);
     const [CampaignList, setCampaignList] = useState(null);
     const [columns, setColumns] = useState([]);
 
-    useEffect(() => {
-        setIsLoading(true);
-        toast.success("Welcome! This toast shows on page load.");
-        const timer = setTimeout(() => {
-            setIsLoading(false);
-          }, 2000); // 2 seconds delay
+    // useEffect(() => {
+    //     setIsLoading(true);
+    //     toast.success("Welcome! This toast shows on page load.");
+    //     const timer = setTimeout(() => {
+    //         setIsLoading(false);
+    //       }, 2000); // 2 seconds delay
       
-          // cleanup timer on unmount
-          return () => clearTimeout(timer);
-      }, []);
+    //       // cleanup timer on unmount
+    //       return () => clearTimeout(timer);
+    //   }, []);
 
       useEffect(() => {
           const api = new RestDataSource();

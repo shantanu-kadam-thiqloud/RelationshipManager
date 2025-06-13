@@ -7,6 +7,7 @@ import ForgotPasswordModal from "./ForgotPasswordModal";
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import * as Yup from "yup";
 import { useNavigate } from "react-router-dom";
+import RestDataSource from "../services/API-request";
 
 const Login = () => {
   const [isLoading, setIsLoading] = useState(false);
@@ -24,14 +25,29 @@ const Login = () => {
   };
 
   const validationSchema = Yup.object().shape({
-    email: Yup.string().email("Invalid email format").required("Email is required"),
+    email: Yup.string().required("Email is required"),
     password: Yup.string().required("Password is required"),
   });
 
   const handleSubmit = (values) => {
     console.log("Login submitted:", values);
-    toast.success("Logged in successfully");
-    navigate("/dashboard");
+    const api = new RestDataSource();
+          
+              const payload = {                
+                  "loginId": values.email,
+                  "password": values.password,
+                  "operation": "Login"                
+              };              
+              api.PostData(process.env.REACT_APP_API_URL, (response) => {
+                if (response && response.data) {
+                  console.log("userdata - ",JSON.parse(response.data));
+                  sessionStorage.setItem("userData", (response.data));
+                  toast.success("Logged in successfully");
+                  navigate("/dashboard");
+                  //setUsrData(response.data);                  
+                }
+              }, payload);
+    
   };
 
   return (
@@ -78,7 +94,7 @@ const Login = () => {
                     <i className="fa-solid fa-envelope mr10"></i>Email Address
                   </label>
                   <Field
-                    type="email"
+                    type="text"
                     className={`form-control ${touched.email && errors.email ? 'is-invalid' : ''}`}
                     id="email"
                     name="email"

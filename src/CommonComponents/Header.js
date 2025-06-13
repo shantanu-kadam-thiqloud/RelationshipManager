@@ -1,12 +1,31 @@
-import React from "react";
-import { Link, useLocation } from "react-router-dom";
+import React,{useEffect, useState} from "react";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import ProfileImg from '../Assets/Images/user2-160x160.jpg';
 import HeaderLogo from '../Assets/Images/header-logo.png';
+import { toast } from "react-toastify";
 
 const Header = () => {
     const location = useLocation();
     const currentPath = location.pathname;
+    const nevigate = useNavigate();
+    const [userData, setUserData] = useState([]);
 
+    useEffect(() => {        
+        const userSessionData = JSON.parse(sessionStorage.getItem("userData"));
+        if(userSessionData)
+        {
+            setUserData(userSessionData.data)
+        }else{
+            toast.error("Unauthorized Access!");
+            nevigate("/");
+        }
+    }, []);
+
+    const logout = () =>{        
+        sessionStorage.removeItem("userData");
+        toast.success("Logged out Succesfully");       
+        nevigate("/");
+    }
     return (
         <nav className="navbar navbar-expand-lg header-bg">
             <div className="container-fluid headerP">
@@ -43,13 +62,13 @@ const Header = () => {
 
                     <li className="nav-item">
                         <Link
-                            className={`nav-link ${currentPath === '/campaigns' ? 'active' : ''}`}
-                            to="/campaigns"
+                            className={`nav-link ${currentPath === '/campaigns' || currentPath === 'campaign-details'  ? 'active' : ''}`}
+                            to="/campaigns" 
                         >Campaigns
                         </Link>
                     </li>
                         <li className="nav-item displayNone">
-                            <a className="nav-link" href="/">
+                            <a className="nav-link" onClick={logout}>
                                 Log Out
                             </a>
                         </li>
@@ -66,12 +85,12 @@ const Header = () => {
                                 />
                             </span>
                             <span className="hideName">
-                                Alexander Pierce
+                                {userData?.Name}
                             </span>
                         </a>
                     </li>
                     <li className="nav-item NavbarNav2 notext">
-                        <a className="nav-link" href="/">
+                        <a className="nav-link" onClick={logout} role="button">
                             <span><i className="fa-solid fa-right-from-bracket fontIcon"></i></span>
                         </a>
                     </li>
