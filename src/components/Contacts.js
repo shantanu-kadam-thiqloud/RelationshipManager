@@ -1,70 +1,73 @@
 import React, { useState, useEffect } from "react";
 import RestDataSource from "../services/API-request";
-import AddContactModal from "./AddContactModal";
+import AddToCampaignModal from "./AddToCampaignModal";
 import EditContactModal from "./EditContactModal";
 import { DataTable } from "primereact/datatable";
 import { Column } from "primereact/column";
 import Header from "../CommonComponents/Header";
 import Footer from "../CommonComponents/Footer";
+import maleIcon from "../Assets/Images/male-icon.png";
+import femaleIcon from "../Assets/Images/female-icon.png"
 
 const sampleContacts = [
-    {
-        id: 1,
-        name: "Smeeta Ghorpade",
-        email: "smeeta.ghorpade@gmail.com",
-        phone: "9096357565",
-        city: "Pune",
-        status: "Active",
-        actions: "true"
-      },
-      {
-        id: 2,
-        name: "Shivaji Patil",
-        email: "shivaji.patil@gmail.com",
-        phone: "9096357566",
-        city: "Mumbai",
-        status: "Active",
-        actions: "true"
-      },
-      {
-        id: 3,
-        name: "Milind Nikam",
-        email: "milind.nikam@gmail.com",
-        phone: "9096357588",
-        city: "Nagpur",
-        status: "Active"
-      },
-      {
-        id: 4,
-        name: "Shantanu Kadam",
-        email: "shantanu.kadam@gmail.com",
-        phone: "9096357554",
-        city: "Kolhapur",
-        status: "Active"
-      },
-      {
-        id: 5,
-        name: "Amardeep Tayade",
-        email: "amardeep.tayade@gmail.com",
-        phone: "9096357590",
-        city: "Nashik",
-        status: "Inactive"
-      },
-      {
-        id: 6,
-        name: "Rutuja Chinchwade",
-        email: "rutuja.chinchwade@gmail.com",
-        phone: "9096357565",
-        city: "Pune",
-        status: "Active"
-      }
-  ];
+  {
+    gender: "Female",
+    name: "Smeeta Ghorpade",
+    email: "smeeta.ghorpade@gmail.com",
+    phone: "9096357565",
+    city: "Pune",
+    status: "Active",    
+    actions: "true"
+  },
+  {
+    gender: "Male",
+    name: "Shivaji Patil",
+    email: "shivaji.patil@gmail.com",
+    phone: "9096357566",
+    city: "Mumbai",
+    status: "Active",    
+    actions: "true"
+  },
+  {
+    gender: "Male",
+    name: "Milind Nikam",
+    email: "milind.nikam@gmail.com",
+    phone: "9096357588",
+    city: "Nagpur",
+    status: "Active",    
+  },
+  {
+    gender: "Male",
+    name: "Shantanu Kadam",
+    email: "shantanu.kadam@gmail.com",
+    phone: "9096357554",
+    city: "Kolhapur",
+    status: "Active",    
+  },
+  {
+    gender: "Male",
+    name: "Amardeep Tayade",
+    email: "amardeep.tayade@gmail.com",
+    phone: "9096357590",
+    city: "Nashik",
+    status: "Inactive"    
+  },
+  {
+    gender: "Female",
+    name: "Rutuja Chinchwade",
+    email: "rutuja.chinchwade@gmail.com",
+    phone: "9096357565",
+    city: "Pune",
+    status: "Active",    
+  }
+];
+
 
 const Contacts = () => {
     const [contacts, setContacts] = useState([]);
       const [columns, setColumns] = useState([]);
       const [selectedItem, setSelectedItem] = useState(null);
-      const [showModal, setShowModal] = useState(false);
+      const [showCampaginModal, setShowCampaginModal] = useState(false);
       const [globalFilterValue, setGlobalFilterValue] = useState('');
       const [showEditModal, setShowEditModal] = useState(false);
     
@@ -94,7 +97,7 @@ const Contacts = () => {
       // Generate columns from object keys
       const generateColumns = (data) => {
         if (data.length > 0) {
-          const cols = Object.keys(data[0]).map((key) => {
+          const cols = Object.keys(data[0]).map((key,value) => {
             // Status column
             if (key === "status") {
               return {
@@ -123,7 +126,21 @@ const Contacts = () => {
                   </div>
                 ),
               };
-            }  
+            }
+            if (key === 'gender') {
+              return {
+                field: key,
+                header: "",
+                body: (rowData) => (
+                  <div style={{ display: 'flex', justifyContent: 'center' }}>                    
+                    <img
+                      src={rowData.gender.toLowerCase() === 'male' ? maleIcon : femaleIcon}
+                      alt={rowData.gender}                      
+                    />
+                  </div>
+                ),
+              };
+            }
             // Default sortable column with custom sort icons
             return {
               field: key,
@@ -154,11 +171,11 @@ const Contacts = () => {
 
                     </div>
                     <div className="col-md-6 text-end">
-                        <button type="submit" onClick={() => setShowModal(true)} className="btn btn-primary submitBtn common-btn mr10">
-                            <i class="fa-solid fa-user-plus mr10"></i>Add New Contact
-                        </button>
-                        <button type="submit" onClick={() => setShowModal(true)} className="btn btn-primary submitBtn common-btn">
-                            <i class="fa-solid fa-plus mr10"></i>Add to Campaign
+                        {/* <button type="submit" onClick={() => setShowModal(true)} className="btn btn-primary submitBtn common-btn mr10">
+                            <i className="fa-solid fa-user-plus mr10"></i>Add New Contact
+                        </button> */}
+                        <button type="submit" onClick={() => setShowCampaginModal(true)} className="btn btn-primary submitBtn common-btn">
+                            <i className="fa-solid fa-plus mr10"></i>Add to Campaign
                         </button>
                     </div>
                 </div>
@@ -209,9 +226,9 @@ const Contacts = () => {
                             ))}
                         </DataTable>
                       </div>
-                      <AddContactModal
-        isOpen={showModal}
-        onRequestClose={() => setShowModal(false)}
+                      <AddToCampaignModal
+        isOpen={showCampaginModal}
+        onRequestClose={() => setShowCampaginModal(false)}
         onSubmit={(newContact) => {
             setContacts((prev) => [...prev, newContact]);
         }}

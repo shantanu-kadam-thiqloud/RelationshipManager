@@ -3,8 +3,8 @@ import Header from "../CommonComponents/Header";
 import { DataTable } from 'primereact/datatable';
 import { Column } from 'primereact/column';
 import { Dropdown } from 'primereact/dropdown';
-import { Button } from 'primereact/button';
-import { InputSwitch } from 'primereact/inputswitch';
+import maleIcon from "../Assets/Images/male-icon.png";
+import femaleIcon from "../Assets/Images/female-icon.png"
 import { Link } from "react-router-dom";
 
 
@@ -12,73 +12,78 @@ const CampaignDetails = () => {
 
     const [members, setMembers] = useState([
         {
+            gender: 'Female',
             name: 'Smeeta Ghorpade',
             email: 'smeeta.ghorpade@gmail.com',
             phone: '9096357565',
             invited: true,
             rsvp: 'Yes',
-            checkedIn: 'Yes',
-            table: '#16',
-            paddle: '#83',
+            checkedIn: 'Yes',           
             icon: 'pi pi-user'
         },
         {
+            gender: 'Male',
             name: 'Shivaji Patil',
             email: 'shivaji.patil@gmail.com',
             phone: '9096357566',
             invited: true,
             rsvp: 'Yes',
-            checkedIn: 'Yes',
-            table: '#6',
-            paddle: '#36',
+            checkedIn: 'Yes',            
             icon: 'pi pi-users'
         },
         {
+            gender: 'Male',
             name: 'Milind Nikam',
             email: 'milind.nikam@gmail.com',
             phone: '9096357588',
             invited: false,
             rsvp: 'Yes',
-            checkedIn: 'Yes',
-            table: '#10',
-            paddle: '#46',
+            checkedIn: 'Yes',            
             icon: 'pi pi-users'
         },
         {
+            gender: 'Male',
             name: 'Shantanu Kadam',
             email: 'shatanu.kadam@gmail.com',
             phone: '9096357554',
             invited: false,
             rsvp: 'Yes',
-            checkedIn: 'Yes',
-            table: '#5',
-            paddle: '#25',
+            checkedIn: 'Yes',            
             icon: 'pi pi-users'
         },
         {
+            gender: 'Male',
             name: 'Amardeep Tayade',
             email: 'amardeep.tayade@gmail.com',
             phone: '9096357590',
             invited: false,
             rsvp: 'Not Responded',
-            checkedIn: 'No',
-            table: null,
-            paddle: null,
+            checkedIn: 'No',            
             icon: 'pi pi-users'
         }
-    ]);
+    ]);    
 
     const rsvpOptions = ['Yes', 'No', 'Not Responded'];
     const checkInOptions = ['Yes', 'No'];
     const [globalFilterValue, setGlobalFilterValue] = useState('');
 
+    // const invitedBodyTemplate = (rowData) => (
+    //     <InputSwitch
+    //     checked={rowData.invited}
+    //     onChange={(e) => onRowEdit(rowData, 'invited', e.value)}
+    // />
+    // );
     const invitedBodyTemplate = (rowData) => (
-        <InputSwitch
-        checked={rowData.invited}
-        onChange={(e) => onRowEdit(rowData, 'invited', e.value)}
-    />
+        <div>
+        <label className="switch">
+        <input type="checkbox" id="togBtn" />
+        <div className="slider round">
+          <span className="on">Yes</span>
+          <span className="off">No</span>
+        </div>
+      </label>
+      </div>
     );
-
     const rsvpBodyTemplate = (rowData) => (
         <Dropdown
             value={rowData.rsvp}
@@ -102,16 +107,26 @@ const CampaignDetails = () => {
         setMembers(updated);
     };
 
-    const tablePaddleTemplate = (rowData) => {
-        return rowData.table && rowData.paddle
-            ? `Table: ${rowData.table} Paddle: ${rowData.paddle}`
-            : 'Not Assigned';
-    };
+    // const tablePaddleTemplate = (rowData) => {
+    //     return rowData.table && rowData.paddle
+    //         ? `Table: ${rowData.table} Paddle: ${rowData.paddle}`
+    //         : 'Not Assigned';
+    // };
 
     const nameBodyTemplate = (rowData) => (
         <span>
             <i className={`${rowData.icon} mr-2`} /> {rowData.name}
         </span>
+    );
+    const genderBodyTemplate = (rowData) => (
+        
+          <div style={{ display: 'flex', justifyContent: 'center' }}>                    
+            <img
+              src={rowData.gender.toLowerCase() === 'male' ? maleIcon : femaleIcon}
+              alt={rowData.gender}                      
+            />
+          </div>       
+      
     );
 
     const actionBodyTemplate = () => (
@@ -126,10 +141,10 @@ const CampaignDetails = () => {
             <Header />
             <div className="campaign-detail-box">
                 <div className="mainTitle2">Campaign 1</div>
-                <div class="dates">
+                <div className="dates">
                     <span className="strongText">Start Date:</span> 06-Jun-2025 &nbsp;&nbsp; <span className="strongText">End Date:</span> 07-Jun-2025
                 </div>
-                <div class="description2">
+                <div className="description2">
                     Campaigns often include financial metrics to assess their effectiveness. This may involve tracking costs, estimated revenue…
                 </div>
             </div>
@@ -146,7 +161,7 @@ const CampaignDetails = () => {
                                 <label htmlFor="exampleInputEmail1" className="form-label">
                                     Guest Type
                                 </label>
-                                <select class="form-select" aria-label="Default select example">
+                                <select className="form-select" aria-label="Default select example">
                                     <option selected>All Type</option>
                                 </select>
                             </div>
@@ -156,7 +171,7 @@ const CampaignDetails = () => {
                                 <label htmlFor="" className="form-label">
                                     RSVP Status
                                 </label>
-                                <select class="form-select" aria-label="Default select example">
+                                <select className="form-select" aria-label="Default select example">
                                     <option selected>All Status</option>
                                 </select>
                             </div>
@@ -166,7 +181,7 @@ const CampaignDetails = () => {
                                 <label htmlFor="" className="form-label">
                                     Check In
                                 </label>
-                                <select class="form-select" aria-label="Default select example">
+                                <select className="form-select" aria-label="Default select example">
                                     <option selected>All Status</option>
                                 </select>
                             </div>
@@ -176,7 +191,7 @@ const CampaignDetails = () => {
                                 <label htmlFor="" className="form-label">
                                     Invitation
                                 </label>
-                                <select class="form-select" aria-label="Default select example">
+                                <select className="form-select" aria-label="Default select example">
                                     <option selected>All Status</option>
 
                                 </select>
@@ -189,6 +204,8 @@ const CampaignDetails = () => {
                 className="tableBorder"
                 size="small"
                 paginator rows={5}
+                scrollable
+                scrollHeight="400px"              
                 globalFilter={globalFilterValue}
                             globalFilterFields={members.map(col => col.name)} // use all field names
                             paginatorTemplate={{
@@ -212,14 +229,14 @@ const CampaignDetails = () => {
                                 </button>
                                 )
                             }}>
-                    <Column field="name" header="Campaign Members" body={nameBodyTemplate} />
+                    <Column field="gender" header="" frozen body={genderBodyTemplate} />
+                    <Column field="name" header="Campaign Members" frozen body={nameBodyTemplate} />
                     <Column field="email" header="Email Address" />
                     <Column field="phone" header="Phone Number" />
                     <Column field="invited" header="Invited?" body={invitedBodyTemplate} />
-                    <Column field="rsvp" header="RSVP Status" body={rsvpBodyTemplate} />
+                    <Column field="rsvp" header="RSVP Status" body={rsvpBodyTemplate}  />
                     <Column field="checkedIn" header="Checked In" body={checkInBodyTemplate} />
-                    <Column header="Table & Paddle No." body={tablePaddleTemplate} />
-                    <Column header="Action" body={actionBodyTemplate} />
+                    <Column header="Action" body={actionBodyTemplate} />                    
                 </DataTable>
                 </div>
             </div>

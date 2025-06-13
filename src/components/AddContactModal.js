@@ -38,7 +38,7 @@ const AddContactModal = ({ isOpen, onRequestClose }) => {
       style={customStyles}
     >
       <div className="textright">
-        <i class="fa-solid fa-xmark" onClick={onRequestClose} ></i>
+        <i className="fa-solid fa-xmark" onClick={onRequestClose} ></i>
       </div>
       <h5 className="titleText">Add New Contact</h5>
       <Formik

@@ -33,7 +33,7 @@ const ResetPasswordModel = ({ isOpen, onRequestClose }) => {
   return (
     <Modal isOpen={isOpen} onRequestClose={onRequestClose} style={customStyles}>
       <div className="textright">
-        <i class="fa-solid fa-xmark" onClick={onRequestClose} ></i>
+        <i className="fa-solid fa-xmark" onClick={onRequestClose} ></i>
       </div>
       <h5 className="titleText">Reset Password</h5>
       <p className="textmuted1 mb-3">

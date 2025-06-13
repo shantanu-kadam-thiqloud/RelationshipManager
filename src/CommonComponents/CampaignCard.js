@@ -7,7 +7,7 @@ const CampaignCard = () => {
 
             <div className="col-md-4 mb30">
                 <div className="campaignCard">
-                    <div class="badge">Guest Count: 6</div>
+                    <div className="badge">Guest Count: 6</div>
                     <div className="campaignContent">
 
 
@@ -23,13 +23,13 @@ const CampaignCard = () => {
                         </div>
 
 
-                        <div class="description">
+                        <div className="description">
                             Campaigns often include financial metrics to assess their effectiveness. This may involve tracking costs, estimated revenue…
                         </div>
 
                     </div>
-                    <div class="button common-card-btn">
-                        VIEW CAMPAIGN DETAILS <i class="fa-solid fa-arrow-right floatRight"></i>
+                    <div className="button common-card-btn">
+                        VIEW CAMPAIGN DETAILS <i className="fa-solid fa-arrow-right floatRight"></i>
 
                     </div>
 

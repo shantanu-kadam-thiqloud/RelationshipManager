@@ -1,9 +1,10 @@
 import React from "react";
 import Header from "../CommonComponents/Header";
 import Footer from "../CommonComponents/Footer";
+import { useNavigate } from "react-router-dom";
 
 const EditGuest = () => {
-
+const navigate = useNavigate();
     return (
         <>
             <Header />
@@ -19,7 +20,7 @@ const EditGuest = () => {
                                         <label htmlFor="exampleInputEmail1" className="form-label">
                                             Campaign Member
                                         </label>
-                                        <input type="text" class="form-control" disabled id="exampleFormControlInput1" placeholder="Enter Campaign Member" />
+                                        <input type="text" className="form-control" disabled id="exampleFormControlInput1" placeholder="Enter Campaign Member" />
                                     </div>
                                 </div>
                                 <div className="col-md-4">
@@ -27,7 +28,7 @@ const EditGuest = () => {
                                         <label htmlFor="exampleInputEmail1" className="form-label">
                                             Email Address
                                         </label>
-                                        <input type="email" class="form-control" disabled id="exampleFormControlInput1" placeholder="Enter Email Address" />
+                                        <input type="email" className="form-control" disabled id="exampleFormControlInput1" placeholder="Enter Email Address" />
                                     </div>
                                 </div>
                                 <div className="col-md-4">
@@ -35,7 +36,7 @@ const EditGuest = () => {
                                         <label htmlFor="exampleInputEmail1" className="form-label">
                                             Phone Number
                                         </label>
-                                        <input type="number" class="form-control" disabled id="exampleFormControlInput1" placeholder="Enter Phone Number" />
+                                        <input type="number" className="form-control" disabled id="exampleFormControlInput1" placeholder="Enter Phone Number" />
                                     </div>
                                 </div>
 
@@ -44,7 +45,7 @@ const EditGuest = () => {
                                         <label htmlFor="" className="form-label">
                                             Guest Type
                                         </label>
-                                        <select class="form-select" aria-label="Default select example">
+                                        <select className="form-select" aria-label="Default select example">
                                             <option selected>Select Guest Type</option>
 
                                         </select>
@@ -55,7 +56,7 @@ const EditGuest = () => {
                                         <label htmlFor="exampleInputEmail1" className="form-label">
                                             Number of Guest
                                         </label>
-                                        <input type="number" class="form-control" disabled id="exampleFormControlInput1" placeholder="Enter Number of Guest" />
+                                        <input type="number" className="form-control" disabled id="exampleFormControlInput1" placeholder="Enter Number of Guest" />
                                     </div>
                                 </div>
                                 <div className="col-md-4">
@@ -63,7 +64,7 @@ const EditGuest = () => {
                                         <label htmlFor="exampleInputEmail1" className="form-label">
                                             Relationship Manager
                                         </label>
-                                        <input type="number" class="form-control" disabled id="exampleFormControlInput1" placeholder="Enter Relationship Manager" />
+                                        <input type="number" className="form-control" disabled id="exampleFormControlInput1" placeholder="Enter Relationship Manager" />
                                     </div>
                                 </div>
                             </div>
@@ -82,7 +83,7 @@ const EditGuest = () => {
                                         <label htmlFor="" className="form-label">
                                             RSVP Status
                                         </label>
-                                        <select class="form-select" aria-label="Default select example">
+                                        <select className="form-select" aria-label="Default select example">
                                             <option selected>Select RSVP Status</option>
 
                                         </select>
@@ -93,7 +94,7 @@ const EditGuest = () => {
                                         <label htmlFor="exampleInputEmail1" className="form-label">
                                             Table Number #
                                         </label>
-                                        <input type="number" class="form-control" id="exampleFormControlInput1" placeholder="Enter Table Number #" />
+                                        <input type="number" className="form-control" id="exampleFormControlInput1" placeholder="Enter Table Number #" />
                                     </div>
                                 </div>
                                 <div className="col-md-4">
@@ -101,7 +102,7 @@ const EditGuest = () => {
                                         <label htmlFor="exampleInputEmail1" className="form-label">
                                             Paddle Number #
                                         </label>
-                                        <input type="number" class="form-control" id="exampleFormControlInput1" placeholder="Enter Paddle Number #" />
+                                        <input type="number" className="form-control" id="exampleFormControlInput1" placeholder="Enter Paddle Number #" />
                                     </div>
                                 </div>
 
@@ -110,7 +111,7 @@ const EditGuest = () => {
                                         <label htmlFor="" className="form-label">
                                             Invitation Sent
                                         </label>
-                                        <select class="form-select" aria-label="Default select example">
+                                        <select className="form-select" aria-label="Default select example">
                                             <option selected>Yes</option>
                                             <option>No</option>
                                         </select>
@@ -121,7 +122,7 @@ const EditGuest = () => {
                                         <label htmlFor="" className="form-label">
                                             Checked In
                                         </label>
-                                        <select class="form-select" aria-label="Default select example">
+                                        <select className="form-select" aria-label="Default select example">
                                             <option selected>Yes</option>
                                             <option>No</option>
 
@@ -142,9 +143,9 @@ const EditGuest = () => {
                             <div className="row SelectArea">
 
                                 <div className="col-md-12">
-                                    <div class="mb-2 mt-2">
+                                    <div className="mb-2 mt-2">
 
-                                        <textarea class="form-control" id="exampleFormControlTextarea1" rows="3" placeholder="Enter any additional information about this guest..."></textarea>
+                                        <textarea className="form-control" id="exampleFormControlTextarea1" rows="3" placeholder="Enter any additional information about this guest..."></textarea>
                                     </div>
                                 </div>
 
@@ -158,7 +159,7 @@ const EditGuest = () => {
                     <button type="submit" className="btn btn-primary submitBtn common-btn2 mr10">
                         save
                     </button>
-                    <button type="submit" className="btn btn-primary submitBtn common-btn2">
+                    <button type="submit" onClick={() => navigate("/campaign-details")} className="btn btn-primary submitBtn common-btn2">
                         cancel
                     </button>
                 </div>
