@@ -9,7 +9,7 @@ export default class RestDataSource {
   }
   async PostData(APIURL, callback, data, LoginApi) {
     const USER = null//await getSessionStorage("USER");     
-     data.userName = USER !== null ? USER.userName : "";
+     //data.userName = USER !== null ? USER.userName : "";
     this.SendRequest("post", APIURL, callback, data, LoginApi);
   }
   async Update(APIURL, data, callback) {
@@ -24,7 +24,7 @@ export default class RestDataSource {
 
   async SendRequest(method, url, callback, data, LoginApi) {
     const USER = null //await getSessionStorage("USER");  
-    let token = USER !== null ? USER.token : ""; 
+    let token = process.env.REACT_APP_API_TOKEN //USER !== null ? USER.token : ""; 
     try {
       let response = await axios.request({
         method: method,
@@ -45,8 +45,8 @@ export default class RestDataSource {
           });
         
           setTimeout(function() {
-            sessionStorage.clear();
-            window.location.href = "/rjsbcl/";
+           // sessionStorage.clear();
+           // window.location.href = "/rjsbcl/";
           }, 5000);  // This ensures toast is displayed before clearing and redirecting
         } else if (error.response.status === 429) {
           toast.error("Too many requests, Please try after sometimes", {
