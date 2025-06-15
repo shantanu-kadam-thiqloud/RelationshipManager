@@ -114,9 +114,13 @@ const CampaignDetails = () => {
     // };
 
     const nameBodyTemplate = (rowData) => (
-        <span>
-            <i className={`${rowData.icon} mr-2`} /> {rowData.name}
-        </span>
+        <>
+        <div>
+            {rowData.name}
+        </div>
+        <div>{rowData.email}</div>
+        <div>{rowData.phone}</div>
+        </>
     );
     const genderBodyTemplate = (rowData) => (
         
@@ -205,7 +209,7 @@ const CampaignDetails = () => {
                 size="small"
                 paginator rows={5}
                 scrollable
-                scrollHeight="400px"              
+                // scrollHeight="400px"              
                 globalFilter={globalFilterValue}
                             globalFilterFields={members.map(col => col.name)} // use all field names
                             paginatorTemplate={{
@@ -231,8 +235,8 @@ const CampaignDetails = () => {
                             }}>
                     <Column field="gender" header="" frozen body={genderBodyTemplate} />
                     <Column field="name" header="Campaign Members" frozen body={nameBodyTemplate} />
-                    <Column field="email" header="Email Address" />
-                    <Column field="phone" header="Phone Number" />
+                    {/* <Column field="email" header="Email Address" />
+                    <Column field="phone" header="Phone Number" /> */}
                     <Column field="invited" header="Invited?" body={invitedBodyTemplate} />
                     <Column field="rsvp" header="RSVP Status" body={rsvpBodyTemplate}  />
                     <Column field="checkedIn" header="Checked In" body={checkInBodyTemplate} />
