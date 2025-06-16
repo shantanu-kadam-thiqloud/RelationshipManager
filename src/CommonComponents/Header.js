@@ -1,4 +1,4 @@
-import React,{useEffect, useState} from "react";
+import React, { useEffect, useState } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import ProfileImg from '../Assets/Images/user2-160x160.jpg';
 import HeaderLogo from '../Assets/Images/header-logo.png';
@@ -10,20 +10,20 @@ const Header = () => {
     const nevigate = useNavigate();
     const [userData, setUserData] = useState([]);
 
-    useEffect(() => {        
+    useEffect(() => {
         const userSessionData = JSON.parse(sessionStorage.getItem("userData"));
-        if(userSessionData)
-        {
+        if (userSessionData) {
             setUserData(userSessionData.data)
-        }else{
-            toast.error("Unauthorized Access!");
-            nevigate("/");
         }
+        // else{
+        //     toast.error("Unauthorized Access!");
+        //     nevigate("/");
+        // }
     }, []);
 
-    const logout = () =>{        
+    const logout = () => {
         sessionStorage.removeItem("userData");
-        toast.success("Logged out Succesfully");       
+        toast.success("Logged out Succesfully");
         nevigate("/");
     }
     return (
@@ -45,28 +45,28 @@ const Header = () => {
                 </button>
                 <div className="collapse navbar-collapse" id="navbarSupportedContent">
                     <ul className="navbar-nav me-auto mb-2 mb-lg-0">
-                    <li className="nav-item">
-                        <Link
-                            className={`nav-link NavLink ${currentPath === '/dashboard' ? 'active' : ''}`}
-                            to="/dashboard"
-                        >Dashboard
-                        </Link>
-                    </li>
-                    <li className="nav-item">
-                        <Link
-                            className={`nav-link ${currentPath === '/contacts' ? 'active' : ''}`}
-                            to="/contacts"
-                        >Contacts
-                        </Link>
-                    </li>
+                        <li className="nav-item">
+                            <Link
+                                className={`nav-link NavLink ${currentPath === '/dashboard' ? 'active' : ''}`}
+                                to="/dashboard"
+                            >Dashboard
+                            </Link>
+                        </li>
+                        <li className="nav-item">
+                            <Link
+                                className={`nav-link ${currentPath === '/contacts' ? 'active' : ''}`}
+                                to="/contacts"
+                            >Contacts
+                            </Link>
+                        </li>
 
-                    <li className="nav-item">
-                        <Link
-                            className={`nav-link ${currentPath === '/campaigns' || currentPath === 'campaign-details'  ? 'active' : ''}`}
-                            to="/campaigns" 
-                        >Campaigns
-                        </Link>
-                    </li>
+                        <li className="nav-item">
+                            <Link
+                                className={`nav-link ${currentPath === '/campaigns' || currentPath === 'campaign-details' ? 'active' : ''}`}
+                                to="/campaigns"
+                            >Campaigns
+                            </Link>
+                        </li>
                         <li className="nav-item displayNone">
                             <a className="nav-link" onClick={logout}>
                                 Log Out

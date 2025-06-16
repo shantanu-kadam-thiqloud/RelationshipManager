@@ -1,10 +1,10 @@
-import React, {useState} from "react";
+import React, { useState } from "react";
 import Header from "../CommonComponents/Header";
 import { DataTable } from 'primereact/datatable';
 import { Column } from 'primereact/column';
 import { Dropdown } from 'primereact/dropdown';
 import maleIcon from "../Assets/Images/male-icon.png";
-import femaleIcon from "../Assets/Images/female-icon.png"
+import femaleIcon from "../Assets/Images/female-icon.png";
 import { Link } from "react-router-dom";
 
 
@@ -18,7 +18,7 @@ const CampaignDetails = () => {
             phone: '9096357565',
             invited: true,
             rsvp: 'Yes',
-            checkedIn: 'Yes',           
+            checkedIn: 'Yes',
             icon: 'pi pi-user'
         },
         {
@@ -28,7 +28,7 @@ const CampaignDetails = () => {
             phone: '9096357566',
             invited: true,
             rsvp: 'Yes',
-            checkedIn: 'Yes',            
+            checkedIn: 'Yes',
             icon: 'pi pi-users'
         },
         {
@@ -38,7 +38,7 @@ const CampaignDetails = () => {
             phone: '9096357588',
             invited: false,
             rsvp: 'Yes',
-            checkedIn: 'Yes',            
+            checkedIn: 'Yes',
             icon: 'pi pi-users'
         },
         {
@@ -48,7 +48,7 @@ const CampaignDetails = () => {
             phone: '9096357554',
             invited: false,
             rsvp: 'Yes',
-            checkedIn: 'Yes',            
+            checkedIn: 'Yes',
             icon: 'pi pi-users'
         },
         {
@@ -58,10 +58,10 @@ const CampaignDetails = () => {
             phone: '9096357590',
             invited: false,
             rsvp: 'Not Responded',
-            checkedIn: 'No',            
+            checkedIn: 'No',
             icon: 'pi pi-users'
         }
-    ]);    
+    ]);
 
     const rsvpOptions = ['Yes', 'No', 'Not Responded'];
     const checkInOptions = ['Yes', 'No'];
@@ -75,20 +75,22 @@ const CampaignDetails = () => {
     // );
     const invitedBodyTemplate = (rowData) => (
         <div>
-        <label className="switch">
-        <input type="checkbox" id="togBtn" />
-        <div className="slider round">
-          <span className="on">Yes</span>
-          <span className="off">No</span>
+            <label className="switch">
+                <input type="checkbox" id="togBtn" />
+                <div className="slider round">
+                    <span className="on">Yes</span>
+                    <span className="off">No</span>
+                </div>
+            </label>
         </div>
-      </label>
-      </div>
     );
     const rsvpBodyTemplate = (rowData) => (
         <Dropdown
             value={rowData.rsvp}
             options={rsvpOptions}
             onChange={(e) => onRowEdit(rowData, 'rsvp', e.value)}
+            style={{ width: '100%', fontSize: '14px !important' }}
+
         />
     );
 
@@ -97,6 +99,8 @@ const CampaignDetails = () => {
             value={rowData.checkedIn}
             options={checkInOptions}
             onChange={(e) => onRowEdit(rowData, 'checkedIn', e.value)}
+            style={{ width: '100%', fontSize: '14px' }}
+
         />
     );
 
@@ -115,27 +119,27 @@ const CampaignDetails = () => {
 
     const nameBodyTemplate = (rowData) => (
         <>
-        <div>
-            {rowData.name}
-        </div>
-        <div>{rowData.email}</div>
-        <div>{rowData.phone}</div>
+            <div style={{ fontSize: '14px', color: '#333' }}>
+                {rowData.name}
+            </div>
+            <div className="grayText">{rowData.email}</div>
+            <div className="grayText">{rowData.phone}</div>
         </>
     );
     const genderBodyTemplate = (rowData) => (
-        
-          <div style={{ display: 'flex', justifyContent: 'center' }}>                    
+
+        <div style={{ display: 'flex', justifyContent: 'center' }}>
             <img
-              src={rowData.gender.toLowerCase() === 'male' ? maleIcon : femaleIcon}
-              alt={rowData.gender}                      
+                src={rowData.gender.toLowerCase() === 'male' ? maleIcon : femaleIcon}
+                alt={rowData.gender}
             />
-          </div>       
-      
+        </div>
+
     );
 
     const actionBodyTemplate = () => (
         <div style={{ display: 'flex', gap: '10px', justifyContent: 'center', alignItems: 'center' }}>
-           <Link to="/edit-guest"> <i className="fa fa-pencil" style={{ color: 'maroon', cursor: 'pointer' }}></i></Link>
+            <Link to="/edit-guest"> <i className="fa fa-pencil" style={{ color: 'maroon', cursor: 'pointer' }}></i></Link>
             <i className="fa fa-trash" style={{ color: 'red', cursor: 'pointer' }}></i>
         </div>
     );
@@ -204,17 +208,17 @@ const CampaignDetails = () => {
                     </div>
                 </form>
                 <div className="row">
-                <DataTable value={members}
-                className="tableBorder"
-                size="small"
-                paginator rows={5}
-                scrollable
-                // scrollHeight="400px"              
-                globalFilter={globalFilterValue}
-                            globalFilterFields={members.map(col => col.name)} // use all field names
-                            paginatorTemplate={{
-                                layout: 'PrevPageLink PageLinks NextPageLink',
-                                PrevPageLink: (options) => (
+                    <DataTable value={members}
+                        className="tableBorder"
+                        size="small"
+                        paginator rows={5}
+                        scrollable
+                        // scrollHeight="400px"              
+                        globalFilter={globalFilterValue}
+                        globalFilterFields={members.map(col => col.name)} // use all field names
+                        paginatorTemplate={{
+                            layout: 'PrevPageLink PageLinks NextPageLink',
+                            PrevPageLink: (options) => (
                                 <button
                                     onClick={options.onClick}
                                     disabled={options.disabled}
@@ -222,8 +226,8 @@ const CampaignDetails = () => {
                                 >
                                     Previous
                                 </button>
-                                ),
-                                NextPageLink: (options) => (
+                            ),
+                            NextPageLink: (options) => (
                                 <button
                                     onClick={options.onClick}
                                     disabled={options.disabled}
@@ -231,17 +235,17 @@ const CampaignDetails = () => {
                                 >
                                     Next
                                 </button>
-                                )
-                            }}>
-                    <Column field="gender" header="" frozen body={genderBodyTemplate} />
-                    <Column field="name" header="Campaign Members" frozen body={nameBodyTemplate} />
-                    {/* <Column field="email" header="Email Address" />
+                            )
+                        }}>
+                        <Column field="gender" header="" frozen body={genderBodyTemplate} />
+                        <Column field="name" header="Campaign Members" frozen body={nameBodyTemplate} />
+                        {/* <Column field="email" header="Email Address" />
                     <Column field="phone" header="Phone Number" /> */}
-                    <Column field="invited" header="Invited?" body={invitedBodyTemplate} />
-                    <Column field="rsvp" header="RSVP Status" body={rsvpBodyTemplate}  />
-                    <Column field="checkedIn" header="Checked In" body={checkInBodyTemplate} />
-                    <Column header="Action" body={actionBodyTemplate} />                    
-                </DataTable>
+                        <Column field="invited" header="Invited?" body={invitedBodyTemplate} />
+                        <Column field="rsvp" header="RSVP Status" style={{ width: '20%' }} body={rsvpBodyTemplate} />
+                        <Column field="checkedIn" header="Checked In" style={{ width: '20%' }} body={checkInBodyTemplate} />
+                        <Column header="Action" style={{ textAlign: 'center' }} body={actionBodyTemplate} />
+                    </DataTable>
                 </div>
             </div>
         </>
