@@ -698,6 +698,14 @@ textarea::placeholder {
 
 }
 
+.CampaignName1 {
+  font-size: 16px;
+  font-weight: 400;
+  margin-bottom: 20px;
+
+
+}
+
 .strongText {
   color: #999;
   font-size: 12px;
