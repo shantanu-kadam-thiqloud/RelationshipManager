@@ -13,7 +13,7 @@ const Header = () => {
     useEffect(() => {
         const userSessionData = JSON.parse(sessionStorage.getItem("userData"));
         if (userSessionData) {
-            setUserData(userSessionData.data)
+            setUserData(userSessionData)
         }
         // else{
         //     toast.error("Unauthorized Access!");

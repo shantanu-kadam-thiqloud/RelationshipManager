@@ -12,8 +12,8 @@ export default class RestDataSource {
      //data.userName = USER !== null ? USER.userName : "";
     this.SendRequest("post", APIURL, callback, data, LoginApi);
   }
-  async Update(APIURL, data, callback) {
-    this.SendRequest("put", APIURL, callback, data);
+  async Update(APIURL, callback, data) {
+    this.SendRequest("patch", APIURL, callback, data);
   }
   async Delete(APIURL, data, callback) {
     this.SendRequest("delete", APIURL, callback, data);
