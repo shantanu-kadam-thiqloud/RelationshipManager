@@ -29,8 +29,7 @@ const Login = () => {
     password: Yup.string().required("Password is required"),
   });
 
-  const handleSubmit = (values) => {
-    console.log("Login submitted:", values);
+  const handleSubmit = (values) => {    
     const api = new RestDataSource();
           
               const payload = {                
@@ -38,7 +37,7 @@ const Login = () => {
                   "password": values.password,
                   "operation": "Login"                
               };              
-              api.PostData(process.env.REACT_APP_API_URL, (response) => {
+              api.PostData(process.env.REACT_APP_API_URL + "/services/apexrest/portaluser", (response) => {
                 if (response && response.data) {
                   console.log("userdata - ",JSON.parse(response.data));
                   sessionStorage.setItem("userData", (response.data));

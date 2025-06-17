@@ -80,11 +80,11 @@ const Campaigns = () => {
                         </div>
                         <div className="description">{campaign.description}</div>
                         </div>
-                        <div className="button common-card-btn">
                         <Link className="CPDetailsLink" to="/campaign-details">
-                          VIEW CAMPAIGN DETAILS <i className="fa-solid fa-arrow-right floatRight"></i>
-                        </Link>
+                        <div className="button common-card-btn">                        
+                          VIEW CAMPAIGN DETAILS <i className="fa-solid fa-arrow-right floatRight"></i>                        
                        </div>
+                       </Link>
                     </div>
                     </div>
                 ))}

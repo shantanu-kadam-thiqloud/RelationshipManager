@@ -3,6 +3,9 @@ import React from "react";
 import Modal from "react-modal";
 import { Formik } from "formik";
 import * as Yup from "yup";
+import { useNavigate } from "react-router-dom";
+import RestDataSource from "../services/API-request";
+import { toast } from "react-toastify";
 
 const customStyles = {
   content: {
@@ -25,6 +28,26 @@ const ForgotPasswordModal = ({ isOpen, onRequestClose }) => {
     email: Yup.string().email("Invalid email").required("Email is required"),
   });
 
+const navigate = useNavigate(); 
+
+const handleSubmit = (values, { resetForm }) => {
+  const api = new RestDataSource();
+  const payload = {
+    email: values.email,
+    operation: "ForgotPassword"
+  };
+
+  api.PostData(process.env.REACT_APP_API_URL + "/services/apexrest/portaluser", (response) => {
+    if (response && response.data) {
+      toast.success("Password sent to your registered email");
+      navigate("/");
+      resetForm();
+      onRequestClose();
+    }
+  }, payload);
+};
+
+
   return (
     <Modal isOpen={isOpen} onRequestClose={onRequestClose} style={customStyles}>
       <div className="textright">
@@ -39,13 +62,9 @@ const ForgotPasswordModal = ({ isOpen, onRequestClose }) => {
       <Formik
         initialValues={{ email: "" }}
         validationSchema={validationSchema}
-        onSubmit={(values, { resetForm }) => {
-          console.log("Reset email sent to:", values.email);
-          resetForm();
-          onRequestClose();
-        }}
+        onSubmit={handleSubmit}        
       >
-        {({ values, handleChange, handleSubmit, errors, touched }) => (
+        {({ values,handleChange, handleSubmit, errors, touched }) => (
           <form onSubmit={handleSubmit} className="login-box">
             <div className="mb-3">
               <label className="form-label"> <i className="fa-solid fa-envelope mr10"></i> Email Address</label>
