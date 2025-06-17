@@ -120,7 +120,7 @@ const Contacts = () => {
                 field: key,
                 header: "Action",
                 body: (rowData) => (
-                  <div style={{ display: 'flex', gap: '10px', justifyContent: 'center' }}>
+                  <div style={{ display: 'flex', gap: '10px' }}>
                     <i className="fa fa-pencil" onClick={() => setShowEditModal(true)} style={{ color: 'maroon', cursor: 'pointer' }}></i>
                     <i className="fa fa-trash" style={{ color: 'red', cursor: 'pointer' }}></i>
                   </div>
