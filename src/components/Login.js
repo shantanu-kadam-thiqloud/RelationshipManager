@@ -38,9 +38,8 @@ const Login = () => {
                   "operation": "Login"                
               };              
               api.PostData(process.env.REACT_APP_API_URL + "/services/apexrest/portaluser", (response) => {
-                if (response && response.data) {
-                  console.log("userdata - ",JSON.parse(response.data));
-                  sessionStorage.setItem("userData", (response.data));
+                if (response && response.data) {                 
+                  sessionStorage.setItem("userData", JSON.stringify(response.data.data[0]));
                   toast.success("Logged in successfully");
                   navigate("/dashboard");
                   //setUsrData(response.data);                  
