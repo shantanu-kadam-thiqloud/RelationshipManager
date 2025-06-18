@@ -29,9 +29,8 @@ const Login = () => {
     password: Yup.string().required("Password is required"),
   });
 
-  const handleSubmit = (values) => {    
-    const api = new RestDataSource();
-          
+  const handleSubmit = async (values) => {
+         const api = new RestDataSource();
               const payload = {                
                   "loginId": values.email,
                   "password": values.password,

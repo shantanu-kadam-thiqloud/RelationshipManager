@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import Header from "../CommonComponents/Header";
+import Footer from "../CommonComponents/Footer";
 import { DataTable } from 'primereact/datatable';
 import { Column } from 'primereact/column';
 import { Dropdown } from 'primereact/dropdown';
@@ -248,6 +249,7 @@ const CampaignDetails = () => {
                     </DataTable>
                 </div>
             </div>
+            <Footer />
         </>
     );
 };
