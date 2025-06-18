@@ -18,7 +18,7 @@ const customStyles = {
 
 Modal.setAppElement("#root");
 
-const AddToCampaignModal = ({ isOpen, onRequestClose }) => { 
+const AddToCampaignModal = ({ isOpen, onRequestClose, selectedItem }) => { 
   const sampleCampaigns = [
     { id: 1, name: "Campaign A" },
     { id: 2, name: "Campaign B" },

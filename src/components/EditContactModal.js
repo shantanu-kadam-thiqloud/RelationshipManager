@@ -56,7 +56,7 @@ const EditContactModal = ({ isOpen, onRequestClose, selectedRow }) => {
     api.Update(
       process.env.REACT_APP_API_URL + "/services/data/v64.0/sobjects/Account/" + selectedRow.id,
       (response) => {
-        if (response && response.data) {
+        if (response && response.status === 204) {
           toast.success("Contact Updated Successfully");
         }
       },
