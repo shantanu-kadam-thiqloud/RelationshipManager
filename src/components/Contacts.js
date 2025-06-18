@@ -114,7 +114,8 @@ const Contacts = () => {
                 phone: item.PersonMobilePhone || "",
                 city: item.PersonMailingCity || "",
                 status: item.Status__c || "",
-                actions: "true"
+                actions: "true",
+                personContactId: item.PersonContactId || "",
               }));
       
               setContacts(transformedData);
@@ -177,7 +178,7 @@ const Contacts = () => {
                 ),
               };
             }
-            const hiddenKeys = ["firstName", "middleName", "lastName", "id"];
+            const hiddenKeys = ["firstName", "middleName", "lastName", "id", "personContactId"];
             if (hiddenKeys.includes(key)) return null;
             // Default sortable column with custom sort icons
             return {
