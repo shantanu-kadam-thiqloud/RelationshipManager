@@ -37,8 +37,8 @@ const Dashboard = () => {
   const [CampaignList, setCampaignList] = useState(null);
   const [columns, setColumns] = useState([]);
 
-    useEffect(() => {
-      setIsLoading(true);
+  useEffect(() => {
+    setIsLoading(true);
     const api = new RestDataSource();
 
     api.GetData(
@@ -47,32 +47,32 @@ const Dashboard = () => {
         if (response && response.data) {
           const transformedData = response.data.data.map((item) => ({
             //id: item.Id,
-            Campaign_Name: item.Name || "",           
+            Campaign_Name: item.Name || "",
             Start_Date: item.StartDate || "",
             End_Date: item.EndDate || "",
-            Description: item?.Description || "",      
-            Created_By: item?.Created_By_Formula__c || ""            
-          }));             
-            setCampaignList(transformedData);
-            generateColumns(transformedData);
-            setIsLoading(false);        
-        }else{
-         // setIsLoading(false);
+            Description: item?.Description || "",
+            Created_By: item?.Created_By_Formula__c || ""
+          }));
+          setCampaignList(transformedData);
+          generateColumns(transformedData);
+          setIsLoading(false);
+        } else {
+          // setIsLoading(false);
         }
-      },                
-    );   
+      },
+    );
   }, []);
 
   const generateColumns = (data) => {
     if (data.length > 0) {
-      const cols = Object.keys(data[0]).map((key,value) => {
+      const cols = Object.keys(data[0]).map((key, value) => {
         return {
           field: key,
           header: key.replace(/_/g, " "),
-          sortable: true,          
+          sortable: true,
         };
       });
-      setColumns(cols.filter(Boolean)); 
+      setColumns(cols.filter(Boolean));
       //setColumns(cols);
       setIsLoading(false);
     }
@@ -84,39 +84,39 @@ const Dashboard = () => {
         <Spinner isLoading={isLoading} />
         <h2 className="mt-3 CampaignName1">Upcoming Campaigns</h2>
         <DataTable
-            className="tableBorder"
-            size="small"
-            value={CampaignList}
-            selectionMode="checkbox"
-            selection={selectedItem}
-            onSelectionChange={(e) => setSelectedItem(e.value)}
-            dataKey="id"
-            paginator
-            rows={5}
-            totalRecords={CampaignList?.length} // ✅ Make sure this is correctly passed
-            paginatorTemplate={{
-              layout: 'CurrentPageReport PrevPageLink PageLinks NextPageLink',
-              PrevPageLink: (options) => (
-                <button
-                  onClick={options.onClick}
-                  disabled={options.disabled}
-                  className="p-paginator-prev"
-                >
-                  Previous
-                </button>
-              ),
-              NextPageLink: (options) => (
-                <button
-                  onClick={options.onClick}
-                  disabled={options.disabled}
-                  className="p-paginator-next"
-                >
-                  Next
-                </button>
-              )
-            }}
-            currentPageReportTemplate="Page {currentPage} of {totalPages} (Total Records: {totalRecords})"
-          >          
+          className="tableBorder"
+          size="small"
+          value={CampaignList}
+          selectionMode="checkbox"
+          selection={selectedItem}
+          onSelectionChange={(e) => setSelectedItem(e.value)}
+          dataKey="id"
+          paginator
+          rows={5}
+          totalRecords={CampaignList?.length} // ✅ Make sure this is correctly passed
+          paginatorTemplate={{
+            layout: 'CurrentPageReport PrevPageLink PageLinks NextPageLink',
+            PrevPageLink: (options) => (
+              <button
+                onClick={options.onClick}
+                disabled={options.disabled}
+                className="p-paginator-prev peginationMob"
+              >
+                <i class="fa-solid fa-backward"></i>
+              </button>
+            ),
+            NextPageLink: (options) => (
+              <button
+                onClick={options.onClick}
+                disabled={options.disabled}
+                className="p-paginator-next"
+              >
+                <i class="fa-solid fa-forward"></i>
+              </button>
+            )
+          }}
+          currentPageReportTemplate="Page {currentPage} of {totalPages} (Total Records: {totalRecords})"
+        >
           {columns.map((col, i) => (
             <Column
               key={i}

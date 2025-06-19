@@ -422,7 +422,7 @@ textarea::placeholder {
 
 .p-paginator-current {
   color: #71368a;
-  background-color: #fff;  
+  background-color: #fff;
   padding: 4px 8px;
   cursor: pointer;
   font-size: 13px;
@@ -697,6 +697,7 @@ textarea::placeholder {
 .campaignContent {
   padding: 20px;
   border-radius: 4px;
+  min-height: 32vh;
 }
 
 .CampaignName {
@@ -1159,7 +1160,12 @@ td {
   overflow-wrap: break-word;
 }
 
-
+.long-text-multiline {
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
 
 /* ...................................................media................................................ */
 
@@ -1271,5 +1277,15 @@ td {
     width: auto !important;
     transform: translate(0, 0) !important;
     margin: 15px !important;
+  }
+
+  .peginationMob {
+    position: relative;
+    left: -303px;
+    top: 38px;
+  }
+
+  .campaignContent {
+    min-height: auto;
   }
 }
