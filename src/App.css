@@ -420,6 +420,15 @@ textarea::placeholder {
   cursor: not-allowed;
 }
 
+.p-paginator-current {
+  color: #71368a;
+  background-color: #fff;  
+  padding: 4px 8px;
+  cursor: pointer;
+  font-size: 13px;
+  height: auto;
+}
+
 /* Style for page number buttons */
 .p-paginator-page {
   border: 1px solid #ddd;
@@ -1020,38 +1029,6 @@ select option {
   text-decoration-line: none !important;
 }
 
-/* 
-.custom-switch-wrapper {
-  position: relative;
-  display: inline-flex;
-  align-items: center;
-  padding: 2px 12px;
-  border-radius: 999px;
-  transition: background 0.3s ease;
-  color: #fff;
-  font-weight: 600;
-}
-
-.custom-switch-wrapper.yes {
-  background-color: #6b8e23; 
-}
-
-.custom-switch-wrapper.no {
-  background-color: red;
-}
-
-.custom-switch-wrapper .p-inputswitch {
-  margin-right: 8px;
-}
-
-.switch-label {
-  pointer-events: none;
-}
-
-.p-inputswitch.p-highlight .p-inputswitch-slider, .p-inputswitch:not(.p-disabled):has(.p-inputswitch-input) .p-inputswitch-slider {
-  background: transparent;
-} */
-
 .p-inputswitch.p-highlight .p-inputswitch-slider {
   background: green;
 }
@@ -1175,6 +1152,13 @@ td.p-frozen-column {
   color: #333;
 }
 
+td {
+  max-width: 350px;
+  white-space: normal;
+  word-break: break-word;
+  overflow-wrap: break-word;
+}
+
 
 
 /* ...................................................media................................................ */
@@ -1219,10 +1203,6 @@ td.p-frozen-column {
     border-bottom: 3px solid #fff;
   }
 
-
-
-
-
   .NavLink {
     margin-left: 0 !important;
     margin-top: 20px;
@@ -1250,7 +1230,6 @@ td.p-frozen-column {
     top: 13px;
   }
 
-
   .ThreeLine {
     position: absolute;
     right: 13px;
@@ -1258,7 +1237,6 @@ td.p-frozen-column {
     color: #CCAFD8 !important;
     border: 0 !important;
   }
-
 
   .ThreeLine:focus {
     position: absolute;
@@ -1293,6 +1271,5 @@ td.p-frozen-column {
     width: auto !important;
     transform: translate(0, 0) !important;
     margin: 15px !important;
-
   }
 }
