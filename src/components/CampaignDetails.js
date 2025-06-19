@@ -17,6 +17,7 @@ const CampaignDetails = () => {
     const userSessionData = JSON.parse(sessionStorage.getItem("userData"));
     const location = useLocation();
     const campaign = location.state?.campaign;
+    const [members, setMembers] = useState(null);
 
     console.log("Selected Campaign:", campaign);
 
@@ -38,22 +39,21 @@ const CampaignDetails = () => {
                 id: item.Id,
                 gender: item.PersonGenderIdentity || "",
       
-                name: [item.FirstName, item.MiddleName, item.LastName]
+                name: [item.FirstName, item.LastName]
                   .filter(Boolean)
                   .join(" "), // Full name with spaces
                 firstName: item.FirstName || "",
-                middleName: item.MiddleName || "",
+                //middleName: item.MiddleName || "",
                 lastName: item.LastName || "",      
-                email: item.Email__c || "",
-                phone: item.PersonMobilePhone || "",
-                city: item.PersonMailingCity || "",
-                status: item.Status__c || "",
+                email: item.Email || "",
+                invited: item.Invited__c || "",                
+                // status: item.Status__c || "",
                 actions: "true",
-                personContactId: item.PersonContactId || "",
+                //personContactId: item.PersonContactId || "",
               }));
+              console.log("API Responses", response.data);
               console.log("transformedData = ",transformedData);
-            //   setContacts(transformedData);
-            //   generateColumns(transformedData);
+              setMembers(transformedData);              
             }
           },
           payload
@@ -63,112 +63,100 @@ const CampaignDetails = () => {
     useEffect(() => {
             getCampaignDetails();
         }, []);
-    const [members, setMembers] = useState([
-        {
-            gender: 'Female',
-            name: 'Smeeta Ghorpade',
-            email: 'smeeta.ghorpade@gmail.com',
-            phone: '9096357565',
-            invited: true,
-            rsvp: 'Yes',
-            checkedIn: 'Yes',
-            icon: 'pi pi-user'
-        },
-        {
-            gender: 'Male',
-            name: 'Shivaji Patil',
-            email: 'shivaji.patil@gmail.com',
-            phone: '9096357566',
-            invited: true,
-            rsvp: 'Yes',
-            checkedIn: 'Yes',
-            icon: 'pi pi-users'
-        },
-        {
-            gender: 'Male',
-            name: 'Milind Nikam',
-            email: 'milind.nikam@gmail.com',
-            phone: '9096357588',
-            invited: false,
-            rsvp: 'Yes',
-            checkedIn: 'Yes',
-            icon: 'pi pi-users'
-        },
-        {
-            gender: 'Male',
-            name: 'Shantanu Kadam',
-            email: 'shatanu.kadam@gmail.com',
-            phone: '9096357554',
-            invited: false,
-            rsvp: 'Yes',
-            checkedIn: 'Yes',
-            icon: 'pi pi-users'
-        },
-        {
-            gender: 'Male',
-            name: 'Amardeep Tayade',
-            email: 'amardeep.tayade@gmail.com',
-            phone: '9096357590',
-            invited: false,
-            rsvp: 'Not Responded',
-            checkedIn: 'No',
-            icon: 'pi pi-users'
-        }
-    ]);
+    // const [members, setMembers] = useState([
+    //     {
+    //         gender: 'Female',
+    //         name: 'Smeeta Ghorpade',
+    //         email: 'smeeta.ghorpade@gmail.com',
+    //         phone: '9096357565',
+    //         invited: true,
+    //         rsvp: 'Yes',
+    //         checkedIn: 'Yes',
+    //         icon: 'pi pi-user'
+    //     },
+    //     {
+    //         gender: 'Male',
+    //         name: 'Shivaji Patil',
+    //         email: 'shivaji.patil@gmail.com',
+    //         phone: '9096357566',
+    //         invited: true,
+    //         rsvp: 'Yes',
+    //         checkedIn: 'Yes',
+    //         icon: 'pi pi-users'
+    //     },
+    //     {
+    //         gender: 'Male',
+    //         name: 'Milind Nikam',
+    //         email: 'milind.nikam@gmail.com',
+    //         phone: '9096357588',
+    //         invited: false,
+    //         rsvp: 'Yes',
+    //         checkedIn: 'Yes',
+    //         icon: 'pi pi-users'
+    //     },
+    //     {
+    //         gender: 'Male',
+    //         name: 'Shantanu Kadam',
+    //         email: 'shatanu.kadam@gmail.com',
+    //         phone: '9096357554',
+    //         invited: false,
+    //         rsvp: 'Yes',
+    //         checkedIn: 'Yes',
+    //         icon: 'pi pi-users'
+    //     },
+    //     {
+    //         gender: 'Male',
+    //         name: 'Amardeep Tayade',
+    //         email: 'amardeep.tayade@gmail.com',
+    //         phone: '9096357590',
+    //         invited: false,
+    //         rsvp: 'Not Responded',
+    //         checkedIn: 'No',
+    //         icon: 'pi pi-users'
+    //     }
+    // ]);
 
     const rsvpOptions = ['Yes', 'No', 'Not Responded'];
     const checkInOptions = ['Yes', 'No'];
     const [globalFilterValue, setGlobalFilterValue] = useState('');
-
-    // const invitedBodyTemplate = (rowData) => (
-    //     <InputSwitch
-    //     checked={rowData.invited}
-    //     onChange={(e) => onRowEdit(rowData, 'invited', e.value)}
-    // />
-    // );
+    
     const invitedBodyTemplate = (rowData) => (
         <div>
-            <label className="switch">
-                <input type="checkbox" id="togBtn" />
-                <div className="slider round">
-                    <span className="on">Yes</span>
-                    <span className="off">No</span>
-                </div>
-            </label>
+          <span style={{ color: rowData.invited === true ? 'green' : 'red', fontWeight: '500' }}>
+                    {rowData.invited === true ? 'Invited' : 'Not Invited'}
+                  </span>  
         </div>
     );
     const rsvpBodyTemplate = (rowData) => (
-        <Dropdown
-            value={rowData.rsvp}
-            options={rsvpOptions}
-            onChange={(e) => onRowEdit(rowData, 'rsvp', e.value)}
-            style={{ width: '100%', fontSize: '14px !important' }}
-
-        />
+        // <Dropdown
+        //     value={rowData.rsvp}
+        //     options={rsvpOptions}
+        //     onChange={(e) => onRowEdit(rowData, 'rsvp', e.value)}
+        //     style={{ width: '100%', fontSize: '14px !important' }}
+        // />
+        <div>
+          <span style={{ color: rowData.rsvpStatus === true ? 'green' : 'red', fontWeight: '500' }}>
+                    {rowData.rsvpStatus === true ? 'Yes' : 'No'}
+                  </span>  
+        </div>
     );
 
-    const checkInBodyTemplate = (rowData) => (
-        <Dropdown
-            value={rowData.checkedIn}
-            options={checkInOptions}
-            onChange={(e) => onRowEdit(rowData, 'checkedIn', e.value)}
-            style={{ width: '100%', fontSize: '14px' }}
+    // const checkInBodyTemplate = (rowData) => (
+    //     <Dropdown
+    //         value={rowData.checkedIn}
+    //         options={checkInOptions}
+    //         onChange={(e) => onRowEdit(rowData, 'checkedIn', e.value)}
+    //         style={{ width: '100%', fontSize: '14px' }}
 
-        />
-    );
+    //     />
+    // );
 
-    const onRowEdit = (rowData, field, value) => {
-        const updated = [...members];
-        const index = updated.findIndex((m) => m.email === rowData.email);
-        updated[index][field] = value;
-        setMembers(updated);
-    };
-
-    // const tablePaddleTemplate = (rowData) => {
-    //     return rowData.table && rowData.paddle
-    //         ? `Table: ${rowData.table} Paddle: ${rowData.paddle}`
-    //         : 'Not Assigned';
-    // };
+    // const onRowEdit = (rowData, field, value) => {
+    //     const updated = [...members];
+    //     const index = updated.findIndex((m) => m.email === rowData.email);
+    //     updated[index][field] = value;
+    //     setMembers(updated);
+    // };    
 
     const nameBodyTemplate = (rowData) => (
         <>
@@ -180,14 +168,17 @@ const CampaignDetails = () => {
         </>
     );
     const genderBodyTemplate = (rowData) => (
-
         <div style={{ display: 'flex', justifyContent: 'center' }}>
             <img
                 src={rowData.gender.toLowerCase() === 'male' ? maleIcon : femaleIcon}
                 alt={rowData.gender}
             />
         </div>
-
+    );
+    const dummyTemplate = (rowData) => (
+        <div style={{ display: 'flex', justifyContent: 'center' }}>
+            
+        </div>
     );
 
     const actionBodyTemplate = () => (
@@ -199,16 +190,7 @@ const CampaignDetails = () => {
 
     return (
         <>
-            <Header />
-            {/* <div className="campaign-detail-box">
-                <div className="mainTitle2">Campaign 1</div>
-                <div className="dates">
-                    <span className="strongText">Start Date:</span> 06-Jun-2025 &nbsp;&nbsp; <span className="strongText">End Date:</span> 07-Jun-2025
-                </div>
-                <div className="description2">
-                    Campaigns often include financial metrics to assess their effectiveness. This may involve tracking costs, estimated revenue…
-                </div>
-            </div> */}
+            <Header />            
             <div className="campaign-detail-box">
                 <div className="mainTitle2">{campaign?.Name || 'Campaign Details'}</div>
                 <div className="dates">
@@ -216,7 +198,7 @@ const CampaignDetails = () => {
                     <span className="strongText">End Date:</span> {campaign?.EndDate || 'N/A'}
                 </div>
                 <div className="description2">
-                    {campaign?.description || 'No campaign description available.'}
+                    {campaign?.Description || 'No campaign description available.'}
                 </div>
             </div>
             <div className="mainContentBox">
@@ -270,6 +252,7 @@ const CampaignDetails = () => {
                         </div>
                     </div>
                 </form>
+                {members && (
                 <div className="row">
                     <DataTable value={members}
                         className="tableBorder"
@@ -301,15 +284,16 @@ const CampaignDetails = () => {
                             )
                         }}>
                         <Column field="gender" header="" frozen body={genderBodyTemplate} />
-                        <Column field="name" header="Campaign Members" frozen body={nameBodyTemplate} />
-                        {/* <Column field="email" header="Email Address" />
-                    <Column field="phone" header="Phone Number" /> */}
+                        <Column field="name" header="Campaign Members" frozen body={nameBodyTemplate} />                        
                         <Column field="invited" header="Invited?" body={invitedBodyTemplate} />
                         <Column field="rsvp" header="RSVP Status" style={{ width: '20%' }} body={rsvpBodyTemplate} />
-                        <Column field="checkedIn" header="Checked In" style={{ width: '20%' }} body={checkInBodyTemplate} />
+                        <Column field="whichDay" header="Which Day" style={{ width: '20%' }} body={dummyTemplate} />
+                        <Column field="noOfGuest" header="Number Of Guest" style={{ width: '25%' }} body={dummyTemplate} />
+                        {/* <Column field="checkedIn" header="Checked In" style={{ width: '20%' }} body={checkInBodyTemplate} /> */}
                         <Column header="Action" style={{ textAlign: 'center' }} body={actionBodyTemplate} />
                     </DataTable>
                 </div>
+                )}
             </div>
             <Footer />
         </>
