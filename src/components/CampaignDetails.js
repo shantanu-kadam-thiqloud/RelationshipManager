@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Header from "../CommonComponents/Header";
 import Footer from "../CommonComponents/Footer";
 import { DataTable } from 'primereact/datatable';
@@ -7,10 +7,62 @@ import { Dropdown } from 'primereact/dropdown';
 import maleIcon from "../Assets/Images/male-icon.png";
 import femaleIcon from "../Assets/Images/female-icon.png";
 import { Link } from "react-router-dom";
+import RestDataSource from "../services/API-request";
+import { useLocation } from "react-router-dom";
+
 
 
 const CampaignDetails = () => {
+    const [isLoading, setIsLoading] = useState(false);
+    const userSessionData = JSON.parse(sessionStorage.getItem("userData"));
+    const location = useLocation();
+    const campaign = location.state?.campaign;
 
+    console.log("Selected Campaign:", campaign);
+
+    const getCampaignDetails = () =>{
+        setIsLoading(true);
+        const api = new RestDataSource();
+      
+        const payload = {
+            "operation": "campaign members",
+            "relationshipmanagerid": userSessionData.Account__c,
+            "campaignid": campaign.Id
+        };
+      
+        api.GetCampaignMembers(
+          process.env.REACT_APP_API_URL + "/services/apexrest/data",
+          (response) => {
+            if (response && response.data) {
+              const transformedData = response.data.data.map((item) => ({
+                id: item.Id,
+                gender: item.PersonGenderIdentity || "",
+      
+                name: [item.FirstName, item.MiddleName, item.LastName]
+                  .filter(Boolean)
+                  .join(" "), // Full name with spaces
+                firstName: item.FirstName || "",
+                middleName: item.MiddleName || "",
+                lastName: item.LastName || "",      
+                email: item.Email__c || "",
+                phone: item.PersonMobilePhone || "",
+                city: item.PersonMailingCity || "",
+                status: item.Status__c || "",
+                actions: "true",
+                personContactId: item.PersonContactId || "",
+              }));
+              console.log("transformedData = ",transformedData);
+            //   setContacts(transformedData);
+            //   generateColumns(transformedData);
+            }
+          },
+          payload
+        );
+      }
+
+    useEffect(() => {
+            getCampaignDetails();
+        }, []);
     const [members, setMembers] = useState([
         {
             gender: 'Female',
@@ -148,13 +200,23 @@ const CampaignDetails = () => {
     return (
         <>
             <Header />
-            <div className="campaign-detail-box">
+            {/* <div className="campaign-detail-box">
                 <div className="mainTitle2">Campaign 1</div>
                 <div className="dates">
                     <span className="strongText">Start Date:</span> 06-Jun-2025 &nbsp;&nbsp; <span className="strongText">End Date:</span> 07-Jun-2025
                 </div>
                 <div className="description2">
                     Campaigns often include financial metrics to assess their effectiveness. This may involve tracking costs, estimated revenue…
+                </div>
+            </div> */}
+            <div className="campaign-detail-box">
+                <div className="mainTitle2">{campaign?.Name || 'Campaign Details'}</div>
+                <div className="dates">
+                    <span className="strongText">Start Date:</span> {campaign?.StartDate || 'N/A'} &nbsp;&nbsp;
+                    <span className="strongText">End Date:</span> {campaign?.EndDate || 'N/A'}
+                </div>
+                <div className="description2">
+                    {campaign?.description || 'No campaign description available.'}
                 </div>
             </div>
             <div className="mainContentBox">
