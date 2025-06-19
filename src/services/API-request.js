@@ -1,15 +1,11 @@
 import axios from "axios";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-//import { getSessionStorage } from "../Components/CommonComponents/cookieData";
-
 export default class RestDataSource {
   async GetData(APIURL, callback) {
     this.SendRequest("get", APIURL, callback);
   }
-  async PostData(APIURL, callback, data, LoginApi) {
-    const USER = null//await getSessionStorage("USER");     
-     //data.userName = USER !== null ? USER.userName : "";
+  async PostData(APIURL, callback, data, LoginApi) {    
     this.SendRequest("post", APIURL, callback, data, LoginApi);
   }
   async Update(APIURL, callback, data) {
@@ -24,11 +20,8 @@ export default class RestDataSource {
   async AddCampaingMenber(APIURL, callback, data,) {
     this.SendRequest("post", APIURL, callback, data);
   }
-  async SendRequest(method, url, callback, data, LoginApi) {
-    const USER = null //await getSessionStorage("USER");  
-    let token = "00DWr000000aBL7!AQEAQI_RzvLyE1TBYLgc6zj9KqVWoJqE7K1iccLf4XBC.nuwfnnl3Ivr8AuuT8nUT5U3qSI_uwnoaerrr5f9.VQY.C9ZBFR9" //process.env.REACT_APP_API_TOKEN  //sessionStorage.getItem("authToken");   //USER !== null ? USER.token : ""; 
-    console.log("url =",url);
-    console.log("data =",data);
+  async SendRequest(method, url, callback, data, LoginApi) {    
+    let token = "00DWr000000aBL7!AQEAQMiasqnwXyCPe6jgZX2zti1V61AKEY5jdzO5kh.8mgUcw6xJQkFKeKdgJ1Yr3KLHH24qsMXVIs2sN20fPXYhcqopE3XT" //process.env.REACT_APP_API_TOKEN  //sessionStorage.getItem("authToken");
     try {
       let response = await axios.request({
         method: method,
@@ -39,7 +32,6 @@ export default class RestDataSource {
           'Content-Type': 'application/json'
         },
       });
-      console.log("response =",response);
       callback(response);
     } catch (error) {
       console.log("error =",error);
@@ -50,17 +42,14 @@ export default class RestDataSource {
             autoClose: false,
           });
         
-          setTimeout(function() {
-           // sessionStorage.clear();
-           // window.location.href = "/rjsbcl/";
+          setTimeout(function() {           
           }, 5000);  // This ensures toast is displayed before clearing and redirecting
         } else if (error.response.status === 429) {
           toast.error("Too many requests, Please try after sometimes", {
             position: "top-right",
             autoClose: false,
           });
-        } else {
-          // toast.error(error.response.data.responseMetaData.message, {
+        } else {          
           console.log("errpr = ",error.response.data.message);
           toast.error(error.message, {
             position: "top-right",

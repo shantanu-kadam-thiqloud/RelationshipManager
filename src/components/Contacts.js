@@ -12,60 +12,6 @@ import Spinner from "../CommonComponents/Spinner";
 import { toast } from "react-toastify";
 import DeleteConfirmationModal from "./DeleteConfirmationModal";
 
-const sampleContacts = [
-  {
-    gender: "Female",
-    name: "Smeeta Ghorpade",
-    email: "smeeta.ghorpade@gmail.com",
-    phone: "9096357565",
-    city: "Pune",
-    status: "Active",    
-    actions: "true"
-  },
-  {
-    gender: "Male",
-    name: "Shivaji Patil",
-    email: "shivaji.patil@gmail.com",
-    phone: "9096357566",
-    city: "Mumbai",
-    status: "Active",    
-    actions: "true"
-  },
-  {
-    gender: "Male",
-    name: "Milind Nikam",
-    email: "milind.nikam@gmail.com",
-    phone: "9096357588",
-    city: "Nagpur",
-    status: "Active",    
-  },
-  {
-    gender: "Male",
-    name: "Shantanu Kadam",
-    email: "shantanu.kadam@gmail.com",
-    phone: "9096357554",
-    city: "Kolhapur",
-    status: "Active",    
-  },
-  {
-    gender: "Male",
-    name: "Amardeep Tayade",
-    email: "amardeep.tayade@gmail.com",
-    phone: "9096357590",
-    city: "Nashik",
-    status: "Inactive"    
-  },
-  {
-    gender: "Female",
-    name: "Rutuja Chinchwade",
-    email: "rutuja.chinchwade@gmail.com",
-    phone: "9096357565",
-    city: "Pune",
-    status: "Active",    
-  }
-];
-
-
 const Contacts = () => {
     const [contacts, setContacts] = useState([]);
       const [columns, setColumns] = useState([]);
@@ -78,10 +24,6 @@ const Contacts = () => {
       const userSessionData = JSON.parse(sessionStorage.getItem("userData"));
       const [showDeleteModal, setShowDeleteModal] = useState(false);
       const [selectedContact, setSelectedContact] = useState(null);
-    
-      const handleAddContact = (newContact) => {
-        setContacts((prev) => [...prev, newContact]);
-      };
 
       useEffect(() => {
         getContactList();
@@ -220,6 +162,10 @@ const Contacts = () => {
         setSelectedContact(rowData);
         setShowDeleteModal(true);
       };
+
+      const ClearSelectedData = () => {
+        setSelectedItem(null);
+      }
       
     return (
         <>
@@ -299,17 +245,13 @@ const Contacts = () => {
                         isOpen={showCampaginModal}
                         onRequestClose={() => setShowCampaginModal(false)}
                         selectedItem={selectedItem}
-                        onSubmit={(newContact) => {
-                            setContacts((prev) => [...prev, newContact]);
-                        }}
+                        onUpdateSuccess={ClearSelectedData}
                         />
                         <EditContactModal
                         isOpen={showEditModal}
                         onRequestClose={() => setShowEditModal(false)}
                         selectedRow={selectedRow}
-                        onSubmit={(newContact) => {
-                            setContacts((prev) => [...prev, newContact]);
-                        }}
+                        onUpdateSuccess={getContactList}
                       />
                       <DeleteConfirmationModal
                         isOpen={showDeleteModal}

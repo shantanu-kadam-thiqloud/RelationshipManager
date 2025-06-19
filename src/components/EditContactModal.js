@@ -25,7 +25,7 @@ const customStyles = {
 Modal.setAppElement("#root");
 
 
-const EditContactModal = ({ isOpen, onRequestClose, selectedRow }) => {
+const EditContactModal = ({ isOpen, onRequestClose, selectedRow, onUpdateSuccess }) => {
   const [isLoading, setIsLoading] = useState(false);
   const validationSchema = Yup.object({
     firstName: Yup.string().required("First Name is required"),
@@ -57,6 +57,7 @@ const EditContactModal = ({ isOpen, onRequestClose, selectedRow }) => {
       process.env.REACT_APP_API_URL + "/services/data/v64.0/sobjects/Account/" + selectedRow.id,
       (response) => {
         if (response && response.status === 204) {
+          onUpdateSuccess?.();
           toast.success("Contact Updated Successfully");
         }
       },
