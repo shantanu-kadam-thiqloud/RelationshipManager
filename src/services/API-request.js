@@ -26,8 +26,6 @@ export default class RestDataSource {
   async SendRequest(method, url, callback, data, LoginApi) {
     const USER = null //await getSessionStorage("USER");  
     let token = "00DWr000000aBL7!AQEAQMiasqnwXyCPe6jgZX2zti1V61AKEY5jdzO5kh.8mgUcw6xJQkFKeKdgJ1Yr3KLHH24qsMXVIs2sN20fPXYhcqopE3XT" //process.env.REACT_APP_API_TOKEN  //sessionStorage.getItem("authToken");   //USER !== null ? USER.token : ""; 
-    console.log("url =",url);
-    console.log("data =",data);
   try {
       let response = await axios.request({
         method: method,
