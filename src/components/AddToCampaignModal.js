@@ -55,7 +55,7 @@ const AddToCampaignModal = ({ isOpen, onRequestClose, selectedItem, onUpdateSucc
         setSelectedCampaigns(null);
         onUpdateSuccess?.();
         onRequestClose();
-        toast.success(response.data.message);
+        toast.success("Members added successfully");
       }
     }, payload);
 

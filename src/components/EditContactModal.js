@@ -138,13 +138,14 @@ const EditContactModal = ({ isOpen, onRequestClose, selectedRow, onUpdateSuccess
                 <div className="col-md-4">
                   <div class="mb-3">
                     <label className="form-label">City</label>
-                    <Field as="select" name="city" className="form-select">
+                    <Field name="city" className="form-control" placeholder="Pune" />
+                    {/* <Field as="select" name="city" className="form-select">
                       <option value="">Select</option>
                       <option value="Pune">Pune</option>
                       <option value="Mumbai">Mumbai</option>
                       <option value="Nagpur">Nagpur</option>
                       <option value="Nashik">Nashik</option>
-                    </Field>
+                    </Field> */}
                     <ErrorMessage name="city" component="div" className="form-error" />
                   </div>
                 </div>

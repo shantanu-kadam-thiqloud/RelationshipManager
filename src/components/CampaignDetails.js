@@ -17,9 +17,7 @@ const CampaignDetails = () => {
     const userSessionData = JSON.parse(sessionStorage.getItem("userData"));
     const location = useLocation();
     const campaign = location.state?.campaign;
-    const [members, setMembers] = useState(null);
-
-    console.log("Selected Campaign:", campaign);
+    const [members, setMembers] = useState(null);  
 
     const getCampaignDetails = () =>{
         setIsLoading(true);
@@ -37,22 +35,22 @@ const CampaignDetails = () => {
             if (response && response.data) {
               const transformedData = response.data.data.map((item) => ({
                 id: item.Id,
-                gender: item.PersonGenderIdentity || "",
-      
+                CampaignId: item.CampaignId,
+                gender: item.PersonGenderIdentity || "",      
                 name: [item.FirstName, item.LastName]
                   .filter(Boolean)
-                  .join(" "), // Full name with spaces
-                firstName: item.FirstName || "",
-                //middleName: item.MiddleName || "",
-                lastName: item.LastName || "",      
+                  .join(" "),
+                firstName: item.FirstName || "",                
+                lastName: item.LastName || "",
+                phone: item.MobilePhone,      
                 email: item.Email || "",
-                invited: item.Invited__c || "",                
-                // status: item.Status__c || "",
+                invited: item.Invited__c || false,                
+                RSVP_status: (item.RSVP__c || "").toString(),
+                which_day: (item.Which_day__c || "").toString(),
+                Number_of_guests: item.Number_of_guests__c?.toString() || "0",
+                Name_Of_The_Guest: item.Name_Of_The_Guest__c,
                 actions: "true",
-                //personContactId: item.PersonContactId || "",
               }));
-              console.log("API Responses", response.data);
-              console.log("transformedData = ",transformedData);
               setMembers(transformedData);              
             }
           },
@@ -63,100 +61,38 @@ const CampaignDetails = () => {
     useEffect(() => {
             getCampaignDetails();
         }, []);
-    // const [members, setMembers] = useState([
-    //     {
-    //         gender: 'Female',
-    //         name: 'Smeeta Ghorpade',
-    //         email: 'smeeta.ghorpade@gmail.com',
-    //         phone: '9096357565',
-    //         invited: true,
-    //         rsvp: 'Yes',
-    //         checkedIn: 'Yes',
-    //         icon: 'pi pi-user'
-    //     },
-    //     {
-    //         gender: 'Male',
-    //         name: 'Shivaji Patil',
-    //         email: 'shivaji.patil@gmail.com',
-    //         phone: '9096357566',
-    //         invited: true,
-    //         rsvp: 'Yes',
-    //         checkedIn: 'Yes',
-    //         icon: 'pi pi-users'
-    //     },
-    //     {
-    //         gender: 'Male',
-    //         name: 'Milind Nikam',
-    //         email: 'milind.nikam@gmail.com',
-    //         phone: '9096357588',
-    //         invited: false,
-    //         rsvp: 'Yes',
-    //         checkedIn: 'Yes',
-    //         icon: 'pi pi-users'
-    //     },
-    //     {
-    //         gender: 'Male',
-    //         name: 'Shantanu Kadam',
-    //         email: 'shatanu.kadam@gmail.com',
-    //         phone: '9096357554',
-    //         invited: false,
-    //         rsvp: 'Yes',
-    //         checkedIn: 'Yes',
-    //         icon: 'pi pi-users'
-    //     },
-    //     {
-    //         gender: 'Male',
-    //         name: 'Amardeep Tayade',
-    //         email: 'amardeep.tayade@gmail.com',
-    //         phone: '9096357590',
-    //         invited: false,
-    //         rsvp: 'Not Responded',
-    //         checkedIn: 'No',
-    //         icon: 'pi pi-users'
-    //     }
-    // ]);
 
-    const rsvpOptions = ['Yes', 'No', 'Not Responded'];
-    const checkInOptions = ['Yes', 'No'];
+        const rsvpOptions = [
+            { label: 'Opened', value: 'Opened' },
+            { label: 'Closed', value: 'Closed' },
+            { label: 'Not Responded', value: 'Not Responded' }
+          ];
+                   
+    
+          const invitedOptions = [
+            { label: 'Invited', value: true },
+            { label: 'Not Invited', value: false }
+          ];
+          
     const [globalFilterValue, setGlobalFilterValue] = useState('');
     
-    const invitedBodyTemplate = (rowData) => (
+    const invitedBodyTemplate = (rowData) => {
+        const isInvited = rowData.invited === true;
+        return (
+          <span style={{ color: isInvited ? 'green' : 'red', fontWeight: '500' }}>
+            {isInvited ? 'Invited' : 'Not Invited'}
+          </span>
+        );
+      };
+      
+    
+    const rsvpBodyTemplate = (rowData) => (       
         <div>
-          <span style={{ color: rowData.invited === true ? 'green' : 'red', fontWeight: '500' }}>
-                    {rowData.invited === true ? 'Invited' : 'Not Invited'}
+          <span style={{ color: rowData.RSVP_status === 'Opened' ? 'green' : 'red', fontWeight: '500' }}>
+                    {rowData.RSVP_status}
                   </span>  
         </div>
-    );
-    const rsvpBodyTemplate = (rowData) => (
-        // <Dropdown
-        //     value={rowData.rsvp}
-        //     options={rsvpOptions}
-        //     onChange={(e) => onRowEdit(rowData, 'rsvp', e.value)}
-        //     style={{ width: '100%', fontSize: '14px !important' }}
-        // />
-        <div>
-          <span style={{ color: rowData.rsvpStatus === true ? 'green' : 'red', fontWeight: '500' }}>
-                    {rowData.rsvpStatus === true ? 'Yes' : 'No'}
-                  </span>  
-        </div>
-    );
-
-    // const checkInBodyTemplate = (rowData) => (
-    //     <Dropdown
-    //         value={rowData.checkedIn}
-    //         options={checkInOptions}
-    //         onChange={(e) => onRowEdit(rowData, 'checkedIn', e.value)}
-    //         style={{ width: '100%', fontSize: '14px' }}
-
-    //     />
-    // );
-
-    // const onRowEdit = (rowData, field, value) => {
-    //     const updated = [...members];
-    //     const index = updated.findIndex((m) => m.email === rowData.email);
-    //     updated[index][field] = value;
-    //     setMembers(updated);
-    // };    
+    );  
 
     const nameBodyTemplate = (rowData) => (
         <>
@@ -175,18 +111,33 @@ const CampaignDetails = () => {
             />
         </div>
     );
-    const dummyTemplate = (rowData) => (
-        <div style={{ display: 'flex', justifyContent: 'center' }}>
-            
+    const whichDayTemplate = (rowData) => (
+        <div style={{ display: 'flex'}}>
+            {rowData.which_day}
+        </div>
+    );
+    const NumberOfGuestsTemplate = (rowData) => (
+        <div style={{ display: 'flex' }}>
+            {rowData.Number_of_guests}
         </div>
     );
 
-    const actionBodyTemplate = () => (
-        <div style={{ display: 'flex', gap: '10px', justifyContent: 'center', alignItems: 'center' }}>
-            <Link to="/edit-guest"> <i className="fa fa-pencil" style={{ color: 'maroon', cursor: 'pointer' }}></i></Link>
-            <i className="fa fa-trash" style={{ color: 'red', cursor: 'pointer' }}></i>
+    const actionBodyTemplate = (rowData) => (
+        <div
+          style={{
+            display: "flex",
+            gap: "10px",
+            justifyContent: "center",
+            alignItems: "center",
+          }}
+        >
+          <Link to="/edit-guest" state={{ guest: rowData }}>
+            <i className="fa fa-pencil" style={{ color: "maroon", cursor: "pointer" }}></i>
+          </Link>
+          <i className="fa fa-trash" style={{ color: "red", cursor: "pointer" }}></i>
         </div>
-    );
+      );
+      
 
     return (
         <>
@@ -208,14 +159,14 @@ const CampaignDetails = () => {
                         <input type="text" value={globalFilterValue}
                             onChange={(e) => setGlobalFilterValue(e.target.value)} className="form-control" placeholder="Search contacts by name, email or phone..." />
                     </div>
-                    <div className="row campaign-details">
+                    {/* <div className="row campaign-details">                                                
                         <div className="col-md-3">
                             <div className="mb-3">
-                                <label htmlFor="exampleInputEmail1" className="form-label">
-                                    Guest Type
+                                <label htmlFor="" className="form-label">
+                                    Invitation
                                 </label>
                                 <select className="form-select" aria-label="Default select example">
-                                    <option selected>All Type</option>
+                                    <option selected>All Status</option>
                                 </select>
                             </div>
                         </div>
@@ -229,28 +180,7 @@ const CampaignDetails = () => {
                                 </select>
                             </div>
                         </div>
-                        <div className="col-md-3">
-                            <div className="mb-3">
-                                <label htmlFor="" className="form-label">
-                                    Check In
-                                </label>
-                                <select className="form-select" aria-label="Default select example">
-                                    <option selected>All Status</option>
-                                </select>
-                            </div>
-                        </div>
-                        <div className="col-md-3">
-                            <div className="mb-3">
-                                <label htmlFor="" className="form-label">
-                                    Invitation
-                                </label>
-                                <select className="form-select" aria-label="Default select example">
-                                    <option selected>All Status</option>
-
-                                </select>
-                            </div>
-                        </div>
-                    </div>
+                    </div> */}
                 </form>
                 {members && (
                 <div className="row">
@@ -261,7 +191,8 @@ const CampaignDetails = () => {
                         scrollable
                         // scrollHeight="400px"              
                         globalFilter={globalFilterValue}
-                        globalFilterFields={members.map(col => col.name)} // use all field names
+                        globalFilterFields={['name', 'email', 'phone', 'RSVP_status', 'which_day', 'Number_of_guests']}
+                        filterDisplay="row"
                         paginatorTemplate={{
                             layout: 'PrevPageLink PageLinks NextPageLink',
                             PrevPageLink: (options) => (
@@ -283,12 +214,50 @@ const CampaignDetails = () => {
                                 </button>
                             )
                         }}>
-                        <Column field="gender" header="" frozen body={genderBodyTemplate} />
-                        <Column field="name" header="Campaign Members" frozen body={nameBodyTemplate} />                        
-                        <Column field="invited" header="Invited?" body={invitedBodyTemplate} />
-                        <Column field="rsvp" header="RSVP Status" style={{ width: '20%' }} body={rsvpBodyTemplate} />
-                        <Column field="whichDay" header="Which Day" style={{ width: '20%' }} body={dummyTemplate} />
-                        <Column field="noOfGuest" header="Number Of Guest" style={{ width: '25%' }} body={dummyTemplate} />
+                        <Column field="gender" header="" body={genderBodyTemplate} />
+                        <Column field="name" header="Campaign Members" body={nameBodyTemplate} />                        
+                        {/* <Column field="invited" header="Invited?" body={invitedBodyTemplate} /> */}
+                        <Column
+                            field="invited"
+                            header="Invited?"
+                            body={invitedBodyTemplate}
+                            dataType="boolean"
+                            filter
+                            filterMatchMode="equals"
+                            showFilterMenu={false}
+                            filterElement={(options) => (
+                                <Dropdown
+                                value={options.value ?? null} // explicitly handle undefined/null
+                                options={invitedOptions}
+                                onChange={(e) => {
+                                    options.filterApplyCallback(e.value);
+                                }}
+                                placeholder="Select Status"
+                                className="p-column-filter"
+                                showClear
+                                />
+                            )}
+                            />
+
+                        {/* <Column field="rsvp" header="RSVP Status" style={{ width: '20%' }} body={rsvpBodyTemplate} /> */}
+                        <Column field="RSVP_status" header="RSVP Status"
+                            style={{ width: '20%' }}
+                            body={rsvpBodyTemplate}
+                            filter
+                            showFilterMenu={false}
+                            filterElement={(options) => (
+                                <Dropdown
+                                    value={options.value}
+                                    options={rsvpOptions}
+                                    onChange={(e) => options.filterApplyCallback(e.value)}
+                                    placeholder="Select RSVP"
+                                    className="p-column-filter"
+                                    showClear
+                                />
+                            )}
+                        />
+                        <Column field="whichDay" header="Which Day" style={{ width: '20%' }} body={whichDayTemplate} />
+                        <Column field="noOfGuest" header="Number Of Guest" style={{ width: '25%' }} body={NumberOfGuestsTemplate} />
                         {/* <Column field="checkedIn" header="Checked In" style={{ width: '20%' }} body={checkInBodyTemplate} /> */}
                         <Column header="Action" style={{ textAlign: 'center' }} body={actionBodyTemplate} />
                     </DataTable>
