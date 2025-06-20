@@ -30,6 +30,27 @@ const Login = () => {
   });
 
   const handleSubmit = async (values) => {
+    const tokenResponse = await fetch(process.env.REACT_APP_API_URL + "/services/oauth2/token", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/x-www-form-urlencoded",
+      },
+      body: new URLSearchParams({
+        grant_type: "client_credentials",
+        client_id: process.env.REACT_APP_API_client_id,
+        client_secret: process.env.REACT_APP_API_client_secret,
+      }),
+    });
+
+    const tokenData = await tokenResponse.json();
+
+    if (!tokenData.access_token) {
+      toast.error("Failed to get token");
+      return;
+    }
+
+    // Step 2: Store token in sessionStorage
+    sessionStorage.setItem("authToken", tokenData.access_token);
          const api = new RestDataSource();
               const payload = {                
                   "loginId": values.email,
